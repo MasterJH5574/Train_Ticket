@@ -1,37 +1,8 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <title>登录 - Train Ticket System</title>
-    <meta name="viewport" content="width=device-width,
-                                     initial-scale=1.0,
-                                     user-scalable=no">
-    <script src="../static/jquery.min.js"></script>
-    <script src="../static/popper.min.js"></script>
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
-    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
-</head>
-
-<body>
-<div class="container">
-    <div class="row text-muted" style="background-color:#ffd1b3">
-        <div class="col"><h1>Train Ticket</h1></div>
-        <div class="col"></div>
-        <div class="col">
-            <div class="btn-group align-self-center">
-                <button type="button" class="btn btn-primary" onclick="location.href='login'">登录</button>
-                <button type="button" class="btn btn-primary" onclick="location.href='register'">注册</button>
-            </div>
-        </div>
-    </div>
-    <nav class="navbar navbar-expand-md bg-light">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="#">查询车票</a>
-            </li>
-        </ul>
-    </nav>
-
+{% extends "base.html" %}
+{% block web_title %}
+    登录
+{% endblock %}
+{% block body_part %}
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <h2 style="text-align: center">登录</h2>
@@ -52,6 +23,4 @@
             <div align="center"><a href="register">没有帐号？点此注册！</a></div>
         </div>
     </div>
-</div>
-</body>
-</html>
+{% endblock %}
