@@ -19,7 +19,7 @@ def login():
         # alart 已登录
         return 1 #TODO alart & return to main page
     else:
-        return 0 #TODO really login
+        return render_template("login.html")
 
 
 @app.route("/user_login", methods=['POST'])  # method=['GET', 'POST']
@@ -39,3 +39,11 @@ def user_login():
             return '0'
 
 
+@app.route("/register")
+def register():
+    current_user = session.get('user_id')
+    if current_user:
+        # alart 已登录
+        return 1 #TODO alart & return to main page
+    else:
+        return render_template("register.html")
