@@ -2,25 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4646d56b-8ef5-4eaf-91f5-a9bb970e405b" name="Default Changelist" comment="mainpage/login/register first with jinja">
-      <change afterPath="$PROJECT_DIR$/web/static/jquery_validation/additional_validation_methods.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/jquery_validation/jquery.validate.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/bootstrap/css/bootstrap-grid.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/bootstrap/css/bootstrap-grid.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/bootstrap/css/bootstrap-reboot.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/bootstrap/css/bootstrap-reboot.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/bootstrap/css/bootstrap.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/bootstrap/css/bootstrap.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/bootstrap/js/bootstrap.bundle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/bootstrap/js/bootstrap.bundle.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/bootstrap/js/bootstrap.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/bootstrap/js/bootstrap.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/web/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/templates/register.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,18 +16,9 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/client.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
+            <state relative-caret-position="62">
               <caret line="74" column="12" selection-start-line="74" selection-start-column="12" selection-end-line="74" selection-end-column="12" />
               <folding>
                 <element signature="e#19#32#0" expanded="true" />
@@ -52,9 +28,18 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/client.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="656">
+              <caret line="31" column="19" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/templates/login.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
+            <state relative-caret-position="748">
               <caret line="34" column="52" lean-forward="true" selection-start-line="34" selection-start-column="41" selection-end-line="34" selection-end-column="52" />
               <folding>
                 <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -66,8 +51,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/templates/register.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
-              <caret line="53" column="29" selection-start-line="53" selection-start-column="29" selection-end-line="53" selection-end-column="29" />
+            <state relative-caret-position="220">
+              <caret line="10" column="26" lean-forward="true" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -260,7 +245,7 @@
       <workItem from="1556025701222" duration="5588000" />
       <workItem from="1556280046218" duration="6797000" />
       <workItem from="1556422165642" duration="16039000" />
-      <workItem from="1556610088590" duration="61374000" />
+      <workItem from="1556610088590" duration="61633000" />
     </task>
     <task id="LOCAL-00001" summary="tryyyy">
       <created>1556031305729</created>
@@ -297,11 +282,39 @@
       <option name="project" value="LOCAL" />
       <updated>1556726219771</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="finished(maybe) login &amp; register">
+      <created>1556798987812</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1556798987812</updated>
+    </task>
+    <task id="LOCAL-00007" summary="some new css &amp; js">
+      <created>1556799047409</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1556799047410</updated>
+    </task>
+    <task id="LOCAL-00008" summary="no message">
+      <created>1556799066426</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1556799066426</updated>
+    </task>
+    <task id="LOCAL-00009" summary="new base">
+      <created>1556799095104</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1556799095104</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="89798000" />
+    <option name="totallyTimeSpent" value="90057000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -347,7 +360,11 @@
     <MESSAGE value="update files" />
     <MESSAGE value="mainpage/login/register" />
     <MESSAGE value="mainpage/login/register first with jinja" />
-    <option name="LAST_COMMIT_MESSAGE" value="mainpage/login/register first with jinja" />
+    <MESSAGE value="finished(maybe) login &amp; register" />
+    <MESSAGE value="some new css &amp; js" />
+    <MESSAGE value="no message" />
+    <MESSAGE value="new base" />
+    <option name="LAST_COMMIT_MESSAGE" value="new base" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Train_Ticket$Flask__web_app_py_.coverage" NAME="Flask (web/app.py) Coverage Results" MODIFIED="1556722789422" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
@@ -421,27 +438,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/templates/main_page.html">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret lean-forward="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="74" column="12" selection-start-line="74" selection-start-column="12" selection-end-line="74" selection-end-column="12" />
-          <folding>
-            <element signature="e#19#32#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -452,6 +452,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="484">
           <caret line="22" column="56" lean-forward="true" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/static/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="6" selection-start-column="6" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -466,16 +473,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/static/style.css">
+    <entry file="file://$PROJECT_DIR$/web/client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="6" selection-start-column="6" selection-end-column="6" />
+        <state relative-caret-position="656">
+          <caret line="31" column="19" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="62">
+          <caret line="74" column="12" selection-start-line="74" selection-start-column="12" selection-end-line="74" selection-end-column="12" />
+          <folding>
+            <element signature="e#19#32#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/templates/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
+        <state relative-caret-position="748">
           <caret line="34" column="52" lean-forward="true" selection-start-line="34" selection-start-column="41" selection-end-line="34" selection-end-column="52" />
           <folding>
             <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -485,8 +502,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/templates/register.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="53" column="29" selection-start-line="53" selection-start-column="29" selection-end-line="53" selection-end-column="29" />
+        <state relative-caret-position="220">
+          <caret line="10" column="26" lean-forward="true" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
         </state>
       </provider>
     </entry>
