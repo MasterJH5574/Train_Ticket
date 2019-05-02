@@ -2,30 +2,101 @@
 {% block web_title %}
     注册
 {% endblock %}
+{% block head_part %}
+    <script>
+        $().ready(function() {
+            $("#register_form").validate({
+                errorClass: "form_error",
+                rules: {
+                    username: {
+                        required: true,
+                        noSpace: true,
+                        minlength: 1,
+                        byteRangeLength: 40
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6,
+                        noSpace: true,
+                        byteRangeLength: 20
+                    },
+                    password_2: {
+                        required: true,
+                        minlength: 6,
+                        noSpace: true,
+                        byteRangeLength: 20,
+                        equalTo: "#password"
+                    },
+                    email: {
+                        required: true,
+                        email: true,
+                        byteRangeLength: 20
+                    },
+                    phone: {
+                        required: true,
+                        digits: true,
+                        byteRangeLength: 20
+                    }
+                },
+                messages: {
+                    username: {
+                        required: "请输入用户名",
+                        noSpace: "用户名不得包含空格",
+                        minlength: "用户名长度不得低于1位",
+                        byteRangeLength: "用户名不得超过40B"
+                    },
+                    password: {
+                        required: "请输入密码",
+                        minlength: "密码长度不得低于6位",
+                        noSpace: "密码不得包含空格",
+                        byteRangeLength: "密码不能超过20B"
+                    },
+                    password_2: {
+                        required: "请再次输入密码",
+                        minlength: "密码长度不得低于6位",
+                        noSpace: "密码不得包含空格",
+                        byteRangeLength: "密码不能超过20B",
+                        equalTo: "两次密码输入不一致"
+                    },
+                    email: {
+                        required: "请输入您的电子邮箱",
+                        email: "请输入正确的邮箱格式",
+                        byteRangeLength: "邮箱不能超过20B"
+                    },
+                    phone: {
+                        required: "请输入您的电话号码",
+                        digits: "电话号码格式不正确",
+                        byteRangeLength: "电话号码不能超过20B"
+                    }
+                }
+            })
+        });
+    </script>
+{% endblock %}
 {% block body_part %}
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <h2 style="text-align: center">注册</h2>
-            <form action="/user_register" method="post" name="login">
+            <form action="/register" method="post" id="register_form">
                 <div class="form-group">
-                    <label for="user_id">用户名</label>
-                    <input type="text" class="form-control" id="user_id" placeholder="请输入您的用户名">
+                    <label for="username">用户名</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="请输入您的用户名">
                 </div>
                 <div class="form-group">
                     <label for="password">密码</label>
-                    <input type="password" class="form-control" id="password" placeholder="请输入您的密码">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="请输入您的密码">
                 </div>
                 <div class="form-group">
                     <label for="password_2">重复密码</label>
-                    <input type="password" class="form-control" id="password_2" placeholder="请再次输入您的密码">
+                    <input type="password" class="form-control" id="password_2" name="password_2" placeholder="请再次输入您的密码">
                 </div>
                 <div class="form-group">
                     <label for="email">电子邮箱</label>
-                    <input type="email" class="form-control" id="email" placeholder="请输入您的电子邮箱">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="请输入您的电子邮箱">
                 </div>
                 <div class="form-group">
                     <label for="phone">手机号码</label>
-                    <input type="tel" class="form-control" id="phone" placeholder="请输入您的手机号码">
+                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="请输入您的手机号码">
                 </div>
                 <div align="center">
                     <button type="reset" class="btn btn-primary">重置</button>

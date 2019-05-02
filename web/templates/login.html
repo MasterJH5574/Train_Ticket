@@ -2,18 +2,55 @@
 {% block web_title %}
     登录
 {% endblock %}
+{% block head_part %}
+    <script>
+        $().ready(function() {
+            $("#login_form").validate({
+                errorClass: "form_error",
+                rules: {
+                    user_id: {
+                        required: true,
+                        digits: true,
+                        min: 1,
+                        byteRangeLength: 20
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6,
+                        noSpace: true,
+                        byteRangeLength: 20
+                    }
+                },
+                messages: {
+                    user_id: {
+                        required: "请输入用户ID",
+                        digits: "用户ID必须为正整数",
+                        min: "用户ID必须为正整数",
+                        byteRangeLength: "用户ID不能超过20B"
+                    },
+                    password: {
+                        required: "请输入密码",
+                        minlength: "密码长度不得低于6位",
+                        noSpace: "密码不得包含空格",
+                        byteRangeLength: "密码不能超过20B"
+                    }
+                }
+            })
+        });
+    </script>
+{% endblock %}
 {% block body_part %}
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <h2 style="text-align: center">登录</h2>
-            <form action="/user_login" method="post" name="login">
+            <form action="/login" method="post" id="login_form">
                 <div class="form-group">
                     <label for="user_id">用户ID</label>
-                    <input type="userid" class="form-control" id="user_id" placeholder="请输入您的用户ID">
+                    <input type="text" class="form-control" id="user_id" name="user_id" placeholder="请输入您的用户ID">
                 </div>
                 <div class="form-group">
                     <label for="password">密码</label>
-                    <input type="password" class="form-control" id="password" placeholder="请输入您的密码">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="请输入您的密码">
                 </div>
                 <div align="center">
                     <button type="reset" class="btn btn-primary">重置</button>
