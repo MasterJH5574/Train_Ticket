@@ -8,8 +8,12 @@
                                      user-scalable=no">
     <script src="../static/jquery.min.js"></script>
     <script src="../static/popper.min.js"></script>
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
     <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../static/jquery_validation/jquery.validate.min.js"></script>
+    <script src="../static/jquery_validation/additional_validation_methods.js"></script>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/style.css">
+    {% block head_part %}{% endblock %}
 </head>
 
 <body>
@@ -18,13 +22,15 @@
         <div class="col"><h1>Train Ticket</h1></div> <!--onclick="location.href='/'"-->
         <div class="col"></div>
         <div class="col">
-            {% if user_id == None %}
-            <div class="btn-group align-self-center">
-                <button type="button" class="btn btn-primary" onclick="location.href='login'">登录</button>
-                <button type="button" class="btn btn-primary" onclick="location.href='register'">注册</button>
-            </div>
+            {% if username == None %}
+                <div align="center">
+                    <button type="button" class="btn btn-info" onclick="location.href='login'">登录</button>
+                    <button type="button" class="btn btn-info" onclick="location.href='register'">注册</button>
+                </div>
             {% else %}
-            <h5> hahaha </h5>
+                <h5> 你好！{{ username }} </h5>
+                <a href="#" class="btn btn-info" role="button">我的信息</a>
+                <a href="logout" class="btn btn-info" role="button">登出</a>
             {% endif %}
         </div>
     </div>
@@ -38,6 +44,19 @@
             </li>
         </ul>
     </nav>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                {% with alert = message.split() %}
+                    <div class="alert alert-{{ alert[0] }} alert-dismissible fade show">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>{{ alert[1] }}</strong> {{ alert[2] }}
+                    </div>
+                {% endwith %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
     {% block body_part %}{% endblock %}
 </div>
