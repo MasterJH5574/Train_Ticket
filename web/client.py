@@ -6,26 +6,35 @@ host = "127.0.0.1"
 port = 8888
 
 
-# send and fetch
-def send_to_socket(message):
+def send(message):
+    global s
     try:
-        _socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        _socket.settimeout(10)
-        _socket.connect((host, port))
-        _socket.send(message.encode('utf-8'))
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(60)
+        s.connect((host, port))
+        s.send(message.encode('utf-8'))
 
-        _list = []
+        res_list = []
         while True:
-            d = _socket.recv(1024)
+            d = s.recv(1024)
             if d:
-                _list.append(d)
+                res_list.append(d.decode('utf-8'))
             else:
                 break
-        res = ''.join(_list)
-        _socket.close()
+        res = ''.join(res_list)
+        s.close()
         return res
     finally:
-        _socket.close()
+        s.close()
 
-def main():
-    return ""
+
+def login(user_id, password):
+    return send("login {} {}\n\0".format(user_id, password))
+
+
+def register(username, password, email, phone):
+    return send("register {} {} {} {}\n\0".format(username, password, email, phone))
+
+
+def query_profile(user_id):
+    return send("query_profile {}\n\0".format(user_id))
