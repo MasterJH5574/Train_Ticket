@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block web_title %}
+    用户信息
+{% endblock %}
+{% block body_part %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h2 style="text-align: center">查询用户信息</h2>
+        </div>
+    </div>
+    {% if privilege == 2 %}
+        <hr/>
+        <div class="row form-inline">
+            <div class="col-md-4 offset-md-4">
+                <form id="query_profile_form" action="/profile" method="get">
+                    <label for="query_id" style="float: left">用户ID：</label>
+                    <input type="text" class="form-control" name="id" id="query_id" placeholder="请输入待查询的用户ID" value="{{ user_query_id }}">
+                    <button type="submit" class="btn btn-primary">查询</button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+    <hr/>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form id="profile_form">
+                <div class="form-group">
+                    <label for="user_id">用户ID：</label>
+                    <input type="text" class="form-control" id="user_id" disabled value="{{ user_query_id }}">
+                </div>
+                <div class="form-group">
+                    <label for="username">用户名：</label>
+                    <input type="text" class="form-control" id="username" disabled value="{{ user_query_name }}">
+                </div>
+                <div class="form-group">
+                    <label for="email">电子邮箱：</label>
+                    <input type="email" class="form-control" id="email" disabled value="{{ user_query_email }}">
+                </div>
+                <div class="form-group">
+                    <label for="phone">电话号码：</label>
+                    <input type="tel" class="form-control" id="phone" disabled value="{{ user_query_phone }}">
+                </div>
+                <div class="form-group">
+                    <label for="privilege">用户权限：</label>
+                    <input type="tel" class="form-control" id="privilege" disabled value="{{ user_privilege }}">
+                </div>
+                <div align="center">
+                    {% if user_id == user_query_id %}
+                        <a href="http://localhost:5000/modify_profile" class="btn btn-secondary" role="button">修改我的信息</a>
+                    {% endif %}
+                    <a href="http://localhost:5000/" class="btn btn-primary" role="button">返回首页</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
