@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4646d56b-8ef5-4eaf-91f5-a9bb970e405b" name="Default Changelist" comment="finished(maybe) login &amp; register">
-      <change afterPath="$PROJECT_DIR$/web/static/jquery_validation/validation_standard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/templates/profile.html" afterDir="false" />
+    <list default="true" id="4646d56b-8ef5-4eaf-91f5-a9bb970e405b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/templates/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/templates/register.html" afterDir="false" />
     </list>
@@ -39,11 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="54" column="36" selection-start-line="54" selection-start-column="36" selection-end-line="54" selection-end-column="36" />
+            <state relative-caret-position="792">
+              <caret line="48" column="38" selection-start-line="48" selection-start-column="38" selection-end-line="48" selection-end-column="38" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="e#1968#1975#1" expanded="true" />
@@ -57,7 +53,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/templates/profile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-66">
+            <state relative-caret-position="330">
               <caret line="15" column="61" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="61" />
               <folding>
                 <element signature="n#style#0;n#label#0;n#form#0;n#div#0;n#div#1;n#!!top" expanded="true" />
@@ -69,8 +65,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/templates/login.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="22" column="19" lean-forward="true" selection-start-line="22" selection-start-column="19" selection-end-line="23" selection-end-column="71" />
+            <state relative-caret-position="176">
+              <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
               <folding>
                 <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#!!top" expanded="true" />
               </folding>
@@ -87,11 +83,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/templates/register.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="66">
-              <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+            <state relative-caret-position="176">
+              <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -155,12 +151,12 @@
         <option value="$PROJECT_DIR$/web/static/style.css" />
         <option value="$PROJECT_DIR$/web/todo.md" />
         <option value="$PROJECT_DIR$/web/app.py" />
-        <option value="$PROJECT_DIR$/web/templates/login.html" />
-        <option value="$PROJECT_DIR$/web/templates/register.html" />
         <option value="$PROJECT_DIR$/web/static/validation_standard.js" />
         <option value="$PROJECT_DIR$/web/templates/profile.html" />
         <option value="$PROJECT_DIR$/web/static/jquery_validation/validation_standard.js" />
         <option value="$PROJECT_DIR$/web/templates/base.html" />
+        <option value="$PROJECT_DIR$/web/templates/login.html" />
+        <option value="$PROJECT_DIR$/web/templates/register.html" />
       </list>
     </option>
   </component>
@@ -289,7 +285,7 @@
       <workItem from="1556610088590" duration="71738000" />
       <workItem from="1556843278556" duration="2192000" />
       <workItem from="1556893230631" duration="200000" />
-      <workItem from="1557185174867" duration="18770000" />
+      <workItem from="1557185174867" duration="19309000" />
     </task>
     <task id="LOCAL-00001" summary="tryyyy">
       <created>1556031305729</created>
@@ -403,11 +399,39 @@
       <option name="project" value="LOCAL" />
       <updated>1556844921029</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="js file for forms validation">
+      <created>1557242702904</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1557242702904</updated>
+    </task>
+    <task id="LOCAL-00018" summary="profile">
+      <created>1557242720567</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1557242720567</updated>
+    </task>
+    <task id="LOCAL-00019" summary="with modal login">
+      <created>1557242736030</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1557242736030</updated>
+    </task>
+    <task id="LOCAL-00020" summary="without forms validation">
+      <created>1557242755422</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1557242755422</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="121324000" />
+    <option name="totallyTimeSpent" value="121863000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -460,7 +484,11 @@
     <MESSAGE value="workspace" />
     <MESSAGE value="finished(maybe) login &amp; register" />
     <MESSAGE value="finished(maybe) login &amp; register with correct validator for length" />
-    <option name="LAST_COMMIT_MESSAGE" value="finished(maybe) login &amp; register with correct validator for length" />
+    <MESSAGE value="js file for forms validation" />
+    <MESSAGE value="profile" />
+    <MESSAGE value="with modal login" />
+    <MESSAGE value="without forms validation" />
+    <option name="LAST_COMMIT_MESSAGE" value="without forms validation" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Train_Ticket$Flask__web_app_py_.coverage" NAME="Flask (web/app.py) Coverage Results" MODIFIED="1556722789422" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
@@ -546,13 +574,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/templates/register.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/static/jquery_validation/validation_standard.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
@@ -562,17 +583,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/templates/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="22" column="19" lean-forward="true" selection-start-line="22" selection-start-column="19" selection-end-line="23" selection-end-column="71" />
+        <state relative-caret-position="176">
+          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
           <folding>
             <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/web/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="792">
+          <caret line="48" column="38" selection-start-line="48" selection-start-column="38" selection-end-line="48" selection-end-column="38" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#1968#1975#1" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/web/templates/profile.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-66">
+        <state relative-caret-position="330">
           <caret line="15" column="61" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="61" />
           <folding>
             <element signature="n#style#0;n#label#0;n#form#0;n#div#0;n#div#1;n#!!top" expanded="true" />
@@ -580,16 +614,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/templates/base.html">
+    <entry file="file://$PROJECT_DIR$/web/templates/register.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="54" column="36" selection-start-line="54" selection-start-column="36" selection-end-line="54" selection-end-column="36" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#1968#1975#1" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="176">
+          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
         </state>
       </provider>
     </entry>
