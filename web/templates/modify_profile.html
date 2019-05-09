@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block web_title %}
+    修改我的信息
+{% endblock %}
+{% block body_part %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h2 style="text-align: center">修改我的信息</h2>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form action="/modify_profile" method="post" id="profile_form">
+                <div class="form-group">
+                    <label for="old_password">修改信息需验证旧密码</label>
+                    <input type="password" class="form-control" id="old_password" name="old_password" placeholder="请输入旧密码">
+                </div>
+                <hr/>
+                <p class="text-center">请填写以下新信息，若某项信息不修改则留空</p>
+                <hr/>
+                <div class="form-group">
+                    <label for="username">新用户名</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="请输入您的新用户名">
+                </div>
+                <div class="form-group">
+                    <label for="new_password">新密码</label>
+                    <input type="password" class="form-control" id="new_password" name="new_password" placeholder="请输入新密码">
+                </div>
+                <div class="form-group">
+                    <label for="email">新电子邮箱</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="请输入新电子邮箱">
+                </div>
+                <div class="form-group">
+                    <label for="phone">新电话号码</label>
+                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="请输入新电话号码">
+                </div>
+                <div align="center">
+                    <a href="http://localhost:5000/" class="btn btn-secondary" role="button">返回首页</a>
+                    <button type="reset" class="btn btn-secondary">重置</button>
+                    <button type="submit" class="btn btn-primary">提交修改</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
