@@ -29,12 +29,25 @@ def send(message):
 
 
 def login(user_id, password):
-    return send("login {} {}\n\0".format(user_id, password))
+    return int(send("login {} {}\n\0".format(user_id, password)))
 
 
 def register(username, password, email, phone):
-    return send("register {} {} {} {}\n\0".format(username, password, email, phone))
+    return int(send("register {} {} {} {}\n\0".format(username, password, email, phone)))
 
 
 def query_profile(user_id):
     return send("query_profile {}\n\0".format(user_id))
+
+
+def query_password(user_id):
+    return send("query_password {}\n\0".format(user_id))
+
+
+def modify_profile(user_id, username, password, email, phone):
+    return int(send("modify_profile {} {} {} {} {}\n\0".format(user_id, username, password, email, phone)))
+
+
+def get_privilege(user_id):
+    res = query_profile(user_id).split(' ')
+    return int(res[3])
