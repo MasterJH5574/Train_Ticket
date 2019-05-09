@@ -76,7 +76,7 @@ $().ready(function() {
                 minlength: 2,
                 byteRangeLength: 20
             },
-            password: {
+            password_1: {
                 required: true,
                 minlength: 6,
                 noSpace: true,
@@ -87,7 +87,7 @@ $().ready(function() {
                 minlength: 6,
                 noSpace: true,
                 byteRangeLength: 16,
-                equalTo: "#password"
+                equalTo: "#password_1"
             },
             email: {
                 required: true,
@@ -107,7 +107,7 @@ $().ready(function() {
                 minlength: "用户名长度不得低于2位",
                 byteRangeLength: "用户名长度不得超过20位"
             },
-            password: {
+            password_1: {
                 required: "请输入密码",
                 minlength: "密码长度不得低于6位",
                 noSpace: "密码不得包含空格",
@@ -134,7 +134,6 @@ $().ready(function() {
     })
 });
 
-
 $().ready(function() {
     $("#query_profile_form").validate({
         errorClass: "form_error",
@@ -150,6 +149,64 @@ $().ready(function() {
                 digits: "用户ID必须为正整数",
                 min: "用户ID必须为正整数",
                 maxlength: "用户ID长度不能超过20位"
+            }
+        }
+    })
+});
+
+$().ready(function() {
+    $("#profile_form").validate({
+        errorClass: "form_error",
+        rules: {
+            username: {
+                noSpace: true,
+                minlength: 2,
+                byteRangeLength: 20
+            },
+            old_password: {
+                required: true,
+                minlength: 6,
+                noSpace: true,
+                byteRangeLength: 16
+            },
+            new_password: {
+                minlength: 6,
+                noSpace: true,
+                byteRangeLength: 16
+            },
+            email: {
+                email: true,
+                byteRangeLength: 50
+            },
+            phone: {
+                digits: true,
+                byteRangeLength: 20
+            }
+        },
+        messages: {
+            username: {
+                noSpace: "用户名不得包含空格",
+                minlength: "用户名长度不得低于2位",
+                byteRangeLength: "用户名长度不得超过20位"
+            },
+            old_password: {
+                required: "请输入旧密码",
+                minlength: "密码长度不得低于6位",
+                noSpace: "密码不得包含空格",
+                byteRangeLength: "密码长度不能超过16位"
+            },
+            new_password: {
+                minlength: "密码长度不得低于6位",
+                noSpace: "密码不得包含空格",
+                byteRangeLength: "密码长度不能超过16位"
+            },
+            email: {
+                email: "请输入正确的邮箱格式",
+                byteRangeLength: "邮箱长度不能超过50位"
+            },
+            phone: {
+                digits: "电话号码格式不正确",
+                byteRangeLength: "电话号码长度不能超过20位"
             }
         }
     })
