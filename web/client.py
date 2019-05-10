@@ -51,3 +51,7 @@ def modify_profile(user_id, username, password, email, phone):
 def get_privilege(user_id):
     res = query_profile(user_id).split(' ')
     return int(res[3])
+
+
+def modify_privilege(id1, id2, privilege):
+    return int(send("modify_privilege {} {} {}".format(id1, id2, privilege)))

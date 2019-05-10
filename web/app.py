@@ -187,6 +187,31 @@ def modify_profile():
             return redirect(url_for('modify_profile'))
 
 
+@app.route("/modify_privilege", methods=['POST', 'GET'])
+def modify_privilege():
+    current_user_id = session.get('user_id')
+    if not current_user_id:
+        flash("danger 尚未登录！ 请登录后再进行操作(error_1)")
+        return redirect(url_for("login"))
+    if session.get('privilege') != 2:
+        flash("danger 没有权限！ 您不是管理员，不能修改用户权限")
+        return redirect(url_for('main_page'))
+
+    if request.method == 'GET':
+        return render_template("modify_privilege.html",
+                               username=session.get('username'),
+                               privilege=session.get('privilege')
+                               )
+    # method == 'POST'
+    user_id = int(request.form['user_id'])
+    res = client.modify_privilege(current_user_id, user_id, 2)
+    if res == 0:
+        flash("danger 操作失败！ 未知错误信息")
+    else:
+        flash("success 操作成功！ 已成功将用户{}升级为管理员".format(user_id))
+    return redirect(url_for('modify_privilege'))
+
+
 if __name__ == '__main__':
     # app.config.from_object('config')
     app.run(host="127.0.0.1", port=5000, debug=True)

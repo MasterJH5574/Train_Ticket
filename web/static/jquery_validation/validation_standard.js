@@ -211,3 +211,25 @@ $().ready(function() {
         }
     })
 });
+
+$().ready(function() {
+    $("#modify_privilege_form").validate({
+        errorClass: "form_error",
+        rules: {
+            user_id: {
+                required: true,
+                digits: true,
+                min: 1,
+                maxlength: 20
+            }
+        },
+        messages: {
+            user_id: {
+                required: "请填写用户ID",
+                digits: "用户ID必须为正整数",
+                min: "用户ID必须为正整数",
+                maxlength: "用户ID长度不能超过20位"
+            }
+        }
+    })
+});

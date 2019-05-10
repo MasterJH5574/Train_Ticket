@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block web_title %}
+    修改权限
+{% endblock %}
+{% block body_part %}
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <h2 style="text-align: center">修改用户权限</h2>
+            <hr/>
+            要将谁提拔为管理员呢？请输入用户ID：
+            <br>
+            <form action="/modify_privilege" method="post" id="modify_privilege_form">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="user_id" name="user_id" placeholder="请输入用户ID">
+                </div>
+
+                <script>
+                    function confirm_modify_profile() {
+                        const id = document.getElementById('user_id').value;
+                        document.getElementById('confirm_modify_profile').innerHTML = "<h5>确认要将用户 " + id + " 的权限修改为管理员吗？</h5>";
+                    }
+                </script>
+                <div align="center">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modify_privilege_modal" onclick="confirm_modify_profile()">确定</button>
+
+                    <!-- modal -->
+                    <div class="modal fade" id="modify_privilege_modal" tabindex="-1" role="dialog" aria-labelledby="modify_privilege_modal_label" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title font-weight-bold" id="login_modal_label" align="center">确认操作</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <!-- body with javascript-->
+                                <div class="modal-body" id="confirm_modify_profile"></div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                    <button type="submit" class="btn btn-primary">确认</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
