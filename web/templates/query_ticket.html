@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block web_title %}
+车票查询
+{% endblock %}
+{% block body_part %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h2 style="text-align: center">车票查询</h2>
+    </div>
+</div>
+<hr/>
+
+<!--
+C D G K O T Z
+商务座 特等座 一等座 二等座 高级软卧 软卧 动卧 硬卧 软座 硬座 无座
+-->
+<!-- nav -->
+<ul class="nav nav-tabs" id="query_ticket_nav" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general"
+           role="tab" aria-controls="general" aria-selected="true">普通车票查询</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="transit-tab" data-toggle="tab" href="#transit"
+           role="tab" aria-controls="transit" aria-selected="false">带中转车票查询</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="return-tab" data-toggle="tab" href="#return"
+           role="tab" aria-controls="return" aria-selected="false">往返票查询w</a>
+    </li>
+</ul>
+
+<!-- nav-content -->
+<div class="tab-content" id="query_ticket_nav_content">
+    <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+        <div class="card">
+            <div class="card-body">
+                <form id="query_ticket_form">
+                    <!-- row 1 -->
+                    <div class="row">
+                        <label class="col-1 col-form-label" for="source" style="text-align: right">出发站</label>
+                        <div class="col-auto">
+                            <input type="text" class="form-control" id="source" name="source" placeholder="请输入起点站">
+                        </div>
+
+                        <!-- icon -->
+                        <div class="col-auto" style="text-align: center">
+                            <span class="oi oi-loop" onclick="swap_input_value()" style="cursor: pointer"></span>
+                        </div>
+                        <script>
+                            function swap_input_value() {
+                                const S = document.getElementById('source').value;
+                                const T = document.getElementById('terminal').value;
+                                document.getElementById('source').value = T;
+                                document.getElementById('terminal').value = S;
+                            }
+                        </script>
+
+                        <label class="col-auto col-form-label" for="terminal" style="text-align: right">到达站</label>
+                        <div class="col-auto">
+                            <input type="text" class="form-control"
+                                   id="terminal" name="terminal" placeholder="请输入到达站">
+                        </div>
+
+                        <!-- datepicker -->
+                        <label class="col-auto col-form-label" for="date" style="text-align: right">出发日</label>
+                        <div class="col-3 input-group date" id="datepicker">
+                            <input type="text" class="form-control" id="date" name="date">
+                            <span class="input-group-append">
+                                <span class="input-group-text">
+                                    <span class="input-group-addon">
+                                        <span class="oi oi-calendar"></span>
+                                    </span>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <!-- row 2 -->
+                    <div class="row">
+                        <div class="col-auto">车次类型：</div>
+                        <div class="col-auto">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="type_C" value="type_C">
+                                <label class="form-check-label" for="type_C">C型车</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="type_D" value="type_D">
+                                <label class="form-check-label" for="type_D">D型车</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="type_G" value="type_G">
+                                <label class="form-check-label" for="type_G">G型车</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="type_K" value="type_K">
+                                <label class="form-check-label" for="type_K">K型车</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="type_O" value="type_O">
+                                <label class="form-check-label" for="type_O">O型车</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="type_T" value="type_T">
+                                <label class="form-check-label" for="type_T">T型车</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="type_Z" value="type_Z">
+                                <label class="form-check-label" for="type_Z">Z型车</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">查询</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="transit" role="tabpanel" aria-labelledby="transit-tab">
+        BBBBB
+    </div>
+    <div class="tab-pane fade" id="return" role="tabpanel" aria-labelledby="return-tab">
+        CCCCC
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#datepicker').datetimepicker({
+            dayViewHeaderFormat: 'YYYY年MMMM',
+            format: 'YYYY/MM/DD',
+            showClose: true
+        });
+    });
+</script>
+{% endblock %}
