@@ -39,6 +39,7 @@ private:
 	user *read_user(const int _id) {
 		//if (!file) throw(sjtu::runtime_error());
 		if (!file) return NULL;
+		if (_id >= origin_id + sz) return NULL;
 		fseek(file, sizeof(int) + (_id - origin_id) * sizeof(user), SEEK_SET);
 		user *temp = new user();
 		fread(temp, sizeof(user), 1, file);
@@ -77,6 +78,7 @@ public:
 	}
 
 	void delete_file() {
+		cout << "1\n";
 		sz = 0;
 		save_info();
 		remove("user_data");
@@ -99,6 +101,7 @@ public:
 
 	bool user_login(const int _id, const char *_passwd) {
 		user *tempuser = read_user(_id);
+		if (tempuser == NULL) return false;
 		if (strcmp(tempuser->passwd, _passwd) == 0) {
 			current_user = tempuser;
 			return true;
@@ -117,7 +120,7 @@ public:
 				cout << "0\n";
 				return;
 			}
-			cout << tempuser->name << " " << tempuser->email << " " << tempuser->phone << " " << tempuser->priv << endl;
+			cout << tempuser->name << " " << tempuser->email << " " << tempuser->phone << " " << tempuser->priv << "\n";
 		}
 	}
 
@@ -137,11 +140,15 @@ public:
 	bool modify_user_priv(const int _id1, const int _id2, const int _priv) {
 		if (_priv <= 0 || _priv > 2) return false;
 		user *user1 = read_user(_id1);
-		if (user1->priv != 2) return true;
+		if (user1 == NULL) return false;
+		if (user1->priv != 2) return false;
 		user *user2 = read_user(_id2);
+		if (user2 == NULL) return false;
 		if (user2->priv == 1) {
-			user2->priv = _priv;
-			save_user(user2);
+			if (_priv == 2) {
+				user2->priv = _priv;
+				save_user(user2);
+			}
 			return true;
 		}
 		else 
