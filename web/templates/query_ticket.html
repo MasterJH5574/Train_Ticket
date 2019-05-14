@@ -2,6 +2,9 @@
 {% block web_title %}
 车票查询
 {% endblock %}
+{% block head_part %}
+<script src="../static/station_list.js"></script>
+{% endblock %}
 {% block body_part %}
 <div class="row">
     <div class="col-md-6 offset-md-3">
@@ -35,41 +38,43 @@ C D G K O T Z
     <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
         <div class="card">
             <div class="card-body">
-                <form id="query_ticket_form">
+                <form id="query_ticket_form_general">
                     <!-- row 1 -->
                     <div class="row">
-                        <label class="col-1 col-form-label" for="source" style="text-align: right">出发站</label>
+                        <label class="col-1 col-form-label" for="source_general" style="text-align: right">出发站</label>
                         <div class="col-auto">
-                            <input type="text" class="form-control" id="source" name="source" placeholder="请输入起点站">
+                            <input type="text" class="form-control"
+                                   id="source_general" name="source_general" placeholder="请输入起点站">
                         </div>
 
                         <!-- icon -->
                         <div class="col-auto" style="text-align: center">
-                            <span class="oi oi-loop" onclick="swap_input_value()" style="cursor: pointer"></span>
+                            <span class="fas fa-exchange-alt" onclick="swap_input_value_general()" style="cursor: pointer"></span>
                         </div>
                         <script>
-                            function swap_input_value() {
-                                const S = document.getElementById('source').value;
-                                const T = document.getElementById('terminal').value;
-                                document.getElementById('source').value = T;
-                                document.getElementById('terminal').value = S;
+                            function swap_input_value_general() {
+                                const S = document.getElementById('source_general').value;
+                                const T = document.getElementById('terminal_general').value;
+                                document.getElementById('source_general').value = T;
+                                document.getElementById('terminal_general').value = S;
                             }
                         </script>
 
-                        <label class="col-auto col-form-label" for="terminal" style="text-align: right">到达站</label>
+                        <label class="col-auto col-form-label" for="terminal_general" style="text-align: right">到达站</label>
                         <div class="col-auto">
                             <input type="text" class="form-control"
-                                   id="terminal" name="terminal" placeholder="请输入到达站">
+                                   id="terminal_general" name="terminal_general" placeholder="请输入到达站">
                         </div>
 
                         <!-- datepicker -->
-                        <label class="col-auto col-form-label" for="date" style="text-align: right">出发日</label>
-                        <div class="col-3 input-group date" id="datepicker">
-                            <input type="text" class="form-control" id="date" name="date">
+                        <label class="col-auto col-form-label" for="date_general" style="text-align: right">出发日</label>
+                        <div class="col-3 input-group date" id="datepicker_general">
+                            <input type="text" class="form-control" id="date_general"
+                                   name="date_general" placeholder="点击按钮选择出发日">
                             <span class="input-group-append">
                                 <span class="input-group-text">
                                     <span class="input-group-addon">
-                                        <span class="oi oi-calendar"></span>
+                                        <span class="fas fa-calendar-alt"></span>
                                     </span>
                                 </span>
                             </span>
@@ -82,32 +87,32 @@ C D G K O T Z
                         <div class="col-auto">车次类型：</div>
                         <div class="col-auto">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_C" value="type_C">
-                                <label class="form-check-label" for="type_C">C型车</label>
+                                <input class="form-check-input" type="checkbox" id="type_C_general" value="type_C"_general>
+                                <label class="form-check-label" for="type_C_general">C型车</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_D" value="type_D">
-                                <label class="form-check-label" for="type_D">D型车</label>
+                                <input class="form-check-input" type="checkbox" id="type_D_general" value="type_D_general">
+                                <label class="form-check-label" for="type_D_general">D型车</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_G" value="type_G">
-                                <label class="form-check-label" for="type_G">G型车</label>
+                                <input class="form-check-input" type="checkbox" id="type_G_general" value="type_G_general">
+                                <label class="form-check-label" for="type_G_general">G型车</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_K" value="type_K">
-                                <label class="form-check-label" for="type_K">K型车</label>
+                                <input class="form-check-input" type="checkbox" id="type_K_general" value="type_K_general">
+                                <label class="form-check-label" for="type_K_general">K型车</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_O" value="type_O">
-                                <label class="form-check-label" for="type_O">O型车</label>
+                                <input class="form-check-input" type="checkbox" id="type_O_general" value="type_O_general">
+                                <label class="form-check-label" for="type_O_general">O型车</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_T" value="type_T">
-                                <label class="form-check-label" for="type_T">T型车</label>
+                                <input class="form-check-input" type="checkbox" id="type_T_general" value="type_T_general">
+                                <label class="form-check-label" for="type_T_general">T型车</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_Z" value="type_Z">
-                                <label class="form-check-label" for="type_Z">Z型车</label>
+                                <input class="form-check-input" type="checkbox" id="type_Z_general" value="type_Z_general">
+                                <label class="form-check-label" for="type_Z_general">Z型车</label>
                             </div>
                         </div>
                         <div class="col-auto">
@@ -119,20 +124,161 @@ C D G K O T Z
         </div>
     </div>
     <div class="tab-pane fade" id="transit" role="tabpanel" aria-labelledby="transit-tab">
-        BBBBB
+        <div class="card">
+            <div class="card-body">
+                <form id="query_ticket_form">
+                    <!-- row 1 -->
+                    <div class="row">
+                        <label class="col-1 col-form-label" for="source_transit" style="text-align: right">出发站</label>
+                        <div class="col-auto">
+                            <input type="text" class="form-control"
+                                   id="source_transit" name="source_transit" placeholder="请输入起点站">
+                        </div>
+
+                        <!-- icon -->
+                        <div class="col-auto" style="text-align: center">
+                            <span class="fas fa-exchange-alt" onclick="swap_input_value_transit()" style="cursor: pointer"></span>
+                        </div>
+                        <script>
+                            function swap_input_value_transit() {
+                                const S = document.getElementById('source_transit').value;
+                                const T = document.getElementById('terminal_transit').value;
+                                document.getElementById('source_transit').value = T;
+                                document.getElementById('terminal_transit').value = S;
+                            }
+                        </script>
+
+                        <label class="col-auto col-form-label" for="terminal_transit" style="text-align: right">到达站</label>
+                        <div class="col-auto">
+                            <input type="text" class="form-control"
+                                   id="terminal_transit" name="terminal_transit" placeholder="请输入到达站">
+                        </div>
+
+                        <!-- datepicker -->
+                        <label class="col-auto col-form-label" for="date_transit" style="text-align: right">出发日</label>
+                        <div class="col-3 input-group date" id="datepicker_transit">
+                            <input type="text" class="form-control" id="date_transit"
+                                   name="date_transit" placeholder="点击按钮选择出发日">
+                            <span class="input-group-append">
+                                <span class="input-group-text">
+                                    <span class="input-group-addon">
+                                        <span class="fas fa-calendar-alt"></span>
+                                    </span>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <br/><!-- row 2 -->
+                    <div class="row">
+                        <div class="col-auto">车次类型：</div>
+                        <div class="col-auto">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="type_C_transit" value="type_C_transit">
+                                <label class="form-check-label" for="type_C_transit">C型车</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="type_D_transit" value="type_D_transit">
+                                <label class="form-check-label" for="type_D_transit">D型车</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="type_G_transit" value="type_G_transit">
+                                <label class="form-check-label" for="type_G_transit">G型车</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="type_K_transit" value="type_K_transit">
+                                <label class="form-check-label" for="type_K_transit">K型车</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="type_O_transit" value="type_O_transit">
+                                <label class="form-check-label" for="type_O_transit">O型车</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="type_T_transit" value="type_T_transit">
+                                <label class="form-check-label" for="type_T_transit">T型车</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="type_Z_transit" value="type_Z_transit">
+                                <label class="form-check-label" for="type_Z_transit">Z型车</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">查询</button>
+                        </div>
+                        <div class="col-auto text-info">
+                            <p>查询有一次中转的历时最短的两列车</p>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
     </div>
     <div class="tab-pane fade" id="return" role="tabpanel" aria-labelledby="return-tab">
-        CCCCC
+        <div class="card"></div>
     </div>
 </div>
 
 <script type="text/javascript">
     $(function () {
-        $('#datepicker').datetimepicker({
+        $('#datepicker_general').datetimepicker({
             dayViewHeaderFormat: 'YYYY年MMMM',
-            format: 'YYYY/MM/DD',
+            format: 'YYYY-MM-DD',
+            showClose: true
+        });
+        $('#datepicker_transit').datetimepicker({
+            dayViewHeaderFormat: 'YYYY年MMMM',
+            format: 'YYYY-MM-DD',
             showClose: true
         });
     });
 </script>
+
+<!--
+C D G K O T Z
+商务座 特等座 一等座 二等座 高级软卧 软卧 动卧 硬卧 软座 硬座 无座
+-->
+
+<table class="table table-striped">
+    <thead><tr> <!-- 15 elements -->
+        <th scope="col">车次</th>
+        <th scope="col">出发站<br/>到达站</th>
+        <th scope="col">出发时间<br/>到达时间</th>
+        <th scope="col">历时</th>
+        <th scope="col">商务座</th>
+        <th scope="col">特等座</th>
+        <th scope="col">一等座</th>
+        <th scope="col">二等座</th>
+        <th scope="col">高级软卧</th>
+        <th scope="col">软卧</th>
+        <th scope="col">动卧</th>
+        <th scope="col">硬卧</th>
+        <th scope="col">软座</th>
+        <th scope="col">硬座</th>
+        <th scope="col">无座</th>
+        <th scope="col">购买</th>
+    </tr></thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+            <td>11</td>
+            <td>12</td>
+            <td>13</td>
+            <td>14</td>
+            <td>15</td>
+            <td><button type="button" class="btn btn-primary">购买</button></td>
+        </tr>
+
+    </tbody>
+</table>
+
 {% endblock %}
