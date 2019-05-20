@@ -36,13 +36,13 @@ $().ready(function() {
     $("#modal_login_form").validate({
         errorClass: "form_error",
         rules: {
-            user_id: {
+            user_id_modal: {
                 required: true,
                 digits: true,
                 min: 1,
                 maxlength: 20
             },
-            password: {
+            password_modal: {
                 required: true,
                 minlength: 6,
                 noSpace: true,
@@ -50,13 +50,13 @@ $().ready(function() {
             }
         },
         messages: {
-            user_id: {
+            user_id_modal: {
                 required: "请输入用户ID",
                 digits: "用户ID必须为正整数",
                 min: "用户ID必须为正整数",
                 maxlength: "用户ID长度不能超过20位"
             },
-            password: {
+            password_modal: {
                 required: "请输入密码",
                 minlength: "密码长度不得低于6位",
                 noSpace: "密码不得包含空格",
@@ -229,6 +229,68 @@ $().ready(function() {
                 digits: "用户ID必须为正整数",
                 min: "用户ID必须为正整数",
                 maxlength: "用户ID长度不能超过20位"
+            }
+        }
+    })
+});
+
+$().ready(function() {
+    $("#query_ticket_form_general").validate({
+        errorClass: "form_error",
+        rules: {
+            source_general: {
+                required: true,
+                minlength: 1
+            },
+            terminal_general: {
+                required: true,
+                minlength: 1
+            },
+            date_general: {
+                required: true,
+                minlength: 1
+            }
+        },
+        messages: {
+            source_general: {
+                required: "请输入出发站",
+                minlength: "请输入出发站"
+            },
+            terminal_general: {
+                required: "请输入到达站",
+                minlength: "请输入出发站"
+            },
+            date_general: {
+                required: "请设置出发日期",
+                minlength: "请输入出发站"
+            }
+        }
+    })
+});
+
+$().ready(function() {
+    $("#query_ticket_form_transit").validate({
+        errorClass: "form_error",
+        rules: {
+            source_transit: {
+                required: true
+            },
+            terminal_transit: {
+                required: true
+            },
+            date_transit: {
+                required: true
+            }
+        },
+        messages: {
+            source_transit: {
+                required: "请输入出发站"
+            },
+            terminal_transit: {
+                required: "请输入到达站"
+            },
+            date_transit: {
+                required: "请设置出发日期"
             }
         }
     })
