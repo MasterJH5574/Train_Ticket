@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block web_title %}
+购买
+{% endblock %}
+{% block body_part %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h2 style="text-align: center">购买车票</h2>
+    </div>
+</div>
+<hr/>
+
+<p>您要购买的车票信息如下：<span class="text-info font-weight-bold">（若确认无误请点击“购买”按钮，否则请返回查询页面重新操作）</span></p>
+
+<form method="post" action="/buy_ticket">
+    <table class="table table-striped" id="buy_confirm_table">
+        <thead><tr> <!-- 7 elements -->
+            <th scope="col">车次</th>
+            <th scope="col">出发站</th>
+            <th scope="col">到达站</th>
+            <th scope="col">出发时间</th>
+            <th scope="col">数量</th>
+            <th scope="col">车票类型</th>
+            <th scope="col">价格</th>
+        </tr></thead>
+        <tbody id="table_body">
+            <tr>
+                <td id="train_id">{{ train_id }}</td>
+                <td id="source">{{ source }}</td>
+                <td id="terminal">{{ terminal }}</td>
+                <td id="time_departure">{{ time_departure }}</td>
+                <td> 1 </td>
+                <td id="seat">{{ seat }}</td>
+                <td>{{ price }}</td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
+<div align="center">
+    <a href="http://localhost:5000/tickets" class="btn btn-secondary">返回查询页面</a>
+    <button type="button" class="btn btn-primary" onclick="post_table('/buy_ticket', get_paras())">确认购买</button>
+</div>
+
+<script>
+    function get_paras() {
+        var res = Object;
+        res['train_id'] = document.getElementById('train_id').innerText;
+        res['source'] = document.getElementById('source').innerText;
+        res['terminal'] = document.getElementById('terminal').innerText;
+        res['date'] = document.getElementById('time_departure').innerText.split(' ')[0];
+        res['seat'] = document.getElementById('seat').innerText;
+        return res;
+    }
+
+    function post_table(url, paras) {
+        const form = document.createElement('form');
+        form.method = 'post';
+        form.action = url;
+
+        for (const key in paras)
+            if (paras.hasOwnProperty(key)) {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = paras[key];
+                form.appendChild(input);
+            }
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+{% endblock %}

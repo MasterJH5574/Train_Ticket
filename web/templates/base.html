@@ -26,7 +26,10 @@
 </head>
 
 <body>
+
 <div class="container">
+    <p id="current_user_id" hidden>{{ user_id }}</p>
+    <p id="current_username" hidden>{{ username }}</p>
     <div class="row text-muted" style="background-color:#ffd1b3">
         <div class="col"><h1>Train Ticket</h1></div> <!--onclick="location.href='/'"-->
         <div class="col"></div>
@@ -51,13 +54,13 @@
                             <div class="modal-body">
                                 <form action="/login" method="post" id="modal_login_form">
                                     <div class="form-group">
-                                        <label for="user_id" style="float: left">用户ID</label>
-                                        <input type="text" class="form-control" id="user_id" name="user_id"
+                                        <label for="user_id_modal" style="float: left">用户ID</label>
+                                        <input type="text" class="form-control" id="user_id_modal" name="user_id_modal"
                                                placeholder="请输入您的用户ID">
                                     </div>
                                     <div class="form-group">
-                                        <label for="password" style="float: left">密码</label>
-                                        <input type="password" class="form-control" id="password" name="password"
+                                        <label for="password_modal" style="float: left">密码</label>
+                                        <input type="password" class="form-control" id="password_modal" name="password_modal"
                                                placeholder="请输入您的密码">
                                     </div>
                                     <div align="center">
@@ -80,7 +83,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="my_info_dropdown">
                 <a class="dropdown-item" href="http://localhost:5000/profile">我的个人资料</a>
-                <a class="dropdown-item" href="#">我的购票信息</a>
+                <a class="dropdown-item" href="http://localhost:5000/my_ticket">我的购票信息</a>
             </div>
             <!--<a href="http://localhost:5000/profile" class="btn btn-info" role="button">我的信息</a>-->
             <a href="http://localhost:5000/logout" class="btn btn-info" role="button">登出</a>
@@ -96,11 +99,14 @@
                     <a class="nav-link" href="/">首页</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:5000/tickets">查询车票<br>购买车票</a>
+                    <a class="nav-link" href="http://localhost:5000/tickets">车票查询<br>车票购买</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:5000/query_train">车次查询</a>
                 </li>
                 {% if privilege == 2 %}
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:5000/profile">查询用户信息</a>
+                    <a class="nav-link" href="http://localhost:5000/profile">用户信息查询</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="http://localhost:5000/modify_privilege">修改用户权限</a>

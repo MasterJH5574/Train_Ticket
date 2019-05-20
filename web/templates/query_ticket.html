@@ -27,10 +27,6 @@ C D G K O T Z
         <a class="nav-link" id="transit-tab" data-toggle="tab" href="#transit"
            role="tab" aria-controls="transit" aria-selected="false">带中转车票查询</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" id="return-tab" data-toggle="tab" href="#return"
-           role="tab" aria-controls="return" aria-selected="false">往返票查询w</a>
-    </li>
 </ul>
 
 <!-- nav-content -->
@@ -44,7 +40,7 @@ C D G K O T Z
                         <label class="col-1 col-form-label" for="source_general" style="text-align: right">出发站</label>
                         <div class="col-auto">
                             <input type="text" class="form-control"
-                                   id="source_general" name="source_general" placeholder="请输入起点站">
+                                   id="source_general" name="source_general" placeholder="请输入出发站">
                         </div>
 
                         <!-- icon -->
@@ -87,37 +83,86 @@ C D G K O T Z
                         <div class="col-auto">车次类型：</div>
                         <div class="col-auto">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_C_general" value="type_C"_general>
+                                <input class="form-check-input check1" type="checkbox" id="select_all_general">
+                                <label class="form-check-label" for="select_all_general">全选</label>
+                            </div>
+                            <script>
+                                $("#select_all_general").click(function () {
+                                    $(".check1").prop('checked', $(this).prop('checked'));
+                                });
+                            </script>
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input check1"
+                                       type="checkbox" id="type_C_general" value="type_C"_general>
                                 <label class="form-check-label" for="type_C_general">C型车</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_D_general" value="type_D_general">
+                                <input class="form-check-input check1"
+                                       type="checkbox" id="type_D_general" value="type_D_general">
                                 <label class="form-check-label" for="type_D_general">D型车</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_G_general" value="type_G_general">
+                                <input class="form-check-input check1"
+                                       type="checkbox" id="type_G_general" value="type_G_general">
                                 <label class="form-check-label" for="type_G_general">G型车</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_K_general" value="type_K_general">
+                                <input class="form-check-input check1"
+                                       type="checkbox" id="type_K_general" value="type_K_general">
                                 <label class="form-check-label" for="type_K_general">K型车</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_O_general" value="type_O_general">
+                                <input class="form-check-input check1"
+                                       type="checkbox" id="type_O_general" value="type_O_general">
                                 <label class="form-check-label" for="type_O_general">O型车</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_T_general" value="type_T_general">
+                                <input class="form-check-input check1"
+                                       type="checkbox" id="type_T_general" value="type_T_general">
                                 <label class="form-check-label" for="type_T_general">T型车</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_Z_general" value="type_Z_general">
+                                <input class="form-check-input check1"
+                                       type="checkbox" id="type_Z_general" value="type_Z_general">
                                 <label class="form-check-label" for="type_Z_general">Z型车</label>
                             </div>
                         </div>
                         <div class="col-auto">
-                            <button type="submit" class="btn btn-primary">查询</button>
+                            <button type="button" class="btn btn-primary" onclick="query_general()">查询</button>
                         </div>
+                        <script>
+                            function query_general() {
+                                const xmlhttp = new XMLHttpRequest();
+                                xmlhttp.onreadystatechange=function () {
+                                    if (this.readyState == 4 && this.status == 200)
+                                        document.getElementById("table_body").innerHTML = this.responseText;
+                                };
+                                const S = document.getElementById("source_general").value;
+                                const T = document.getElementById("terminal_general").value;
+                                const date = document.getElementById("date_general").value;
+                                const type_C = document.getElementById("type_C_general").checked;
+                                const type_D = document.getElementById("type_D_general").checked;
+                                const type_G = document.getElementById("type_G_general").checked;
+                                const type_K = document.getElementById("type_K_general").checked;
+                                const type_O = document.getElementById("type_O_general").checked;
+                                const type_T = document.getElementById("type_T_general").checked;
+                                const type_Z = document.getElementById("type_Z_general").checked;
+                                const url = "tickets/query_general_ajax" +
+                                    "?S=" + S +
+                                    "&T=" + T +
+                                    "&date=" + date +
+                                    "&type_C=" + type_C.toString() +
+                                    "&type_D=" + type_D.toString() +
+                                    "&type_G=" + type_G.toString() +
+                                    "&type_K=" + type_K.toString() +
+                                    "&type_O=" + type_O.toString() +
+                                    "&type_T=" + type_T.toString() +
+                                    "&type_Z=" + type_Z.toString();
+                                xmlhttp.open("GET", url, true);
+                                xmlhttp.send();
+                            }
+                        </script>
                     </div>
                 </form>
             </div>
@@ -126,13 +171,13 @@ C D G K O T Z
     <div class="tab-pane fade" id="transit" role="tabpanel" aria-labelledby="transit-tab">
         <div class="card">
             <div class="card-body">
-                <form id="query_ticket_form">
+                <form id="query_ticket_form_transit">
                     <!-- row 1 -->
                     <div class="row">
                         <label class="col-1 col-form-label" for="source_transit" style="text-align: right">出发站</label>
                         <div class="col-auto">
                             <input type="text" class="form-control"
-                                   id="source_transit" name="source_transit" placeholder="请输入起点站">
+                                   id="source_transit" name="source_transit" placeholder="请输入出发站">
                         </div>
 
                         <!-- icon -->
@@ -174,48 +219,94 @@ C D G K O T Z
                         <div class="col-auto">车次类型：</div>
                         <div class="col-auto">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_C_transit" value="type_C_transit">
+                                <input class="form-check-input check2" type="checkbox" id="select_all_transit">
+                                <label class="form-check-label" for="select_all_transit">全选</label>
+                            </div>
+                            <script>
+                                $("#select_all_transit").click(function () {
+                                    $(".check2").prop('checked', $(this).prop('checked'));
+                                });
+                            </script>
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input check2"
+                                       type="checkbox" id="type_C_transit" value="type_C_transit">
                                 <label class="form-check-label" for="type_C_transit">C型车</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_D_transit" value="type_D_transit">
+                                <input class="form-check-input check2"
+                                       type="checkbox" id="type_D_transit" value="type_D_transit">
                                 <label class="form-check-label" for="type_D_transit">D型车</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_G_transit" value="type_G_transit">
+                                <input class="form-check-input check2"
+                                       type="checkbox" id="type_G_transit" value="type_G_transit">
                                 <label class="form-check-label" for="type_G_transit">G型车</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_K_transit" value="type_K_transit">
+                                <input class="form-check-input check2"
+                                       type="checkbox" id="type_K_transit" value="type_K_transit">
                                 <label class="form-check-label" for="type_K_transit">K型车</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_O_transit" value="type_O_transit">
+                                <input class="form-check-input check2"
+                                       type="checkbox" id="type_O_transit" value="type_O_transit">
                                 <label class="form-check-label" for="type_O_transit">O型车</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_T_transit" value="type_T_transit">
+                                <input class="form-check-input check2"
+                                       type="checkbox" id="type_T_transit" value="type_T_transit">
                                 <label class="form-check-label" for="type_T_transit">T型车</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="type_Z_transit" value="type_Z_transit">
+                                <input class="form-check-input check2"
+                                       type="checkbox" id="type_Z_transit" value="type_Z_transit">
                                 <label class="form-check-label" for="type_Z_transit">Z型车</label>
                             </div>
                         </div>
                         <div class="col-auto">
-                            <button type="submit" class="btn btn-primary">查询</button>
+                            <button type="button" class="btn btn-primary" onclick="query_transit()">查询</button>
                         </div>
+                        <script>
+                            function query_transit() {
+                                const xmlhttp = new XMLHttpRequest();
+                                xmlhttp.onreadystatechange=function () {
+                                    if (this.readyState == 4 && this.status == 200)
+                                        document.getElementById("table_body").innerHTML = this.responseText;
+                                };
+                                const S = document.getElementById("source_transit").value;
+                                const T = document.getElementById("terminal_transit").value;
+                                const date = document.getElementById("date_transit").value;
+                                const type_C = document.getElementById("type_C_transit").checked;
+                                const type_D = document.getElementById("type_D_transit").checked;
+                                const type_G = document.getElementById("type_G_transit").checked;
+                                const type_K = document.getElementById("type_K_transit").checked;
+                                const type_O = document.getElementById("type_O_transit").checked;
+                                const type_T = document.getElementById("type_T_transit").checked;
+                                const type_Z = document.getElementById("type_Z_transit").checked;
+                                const url = "tickets/query_transit_ajax" +
+                                    "?S=" + S +
+                                    "&T=" + T +
+                                    "&date=" + date +
+                                    "&type_C=" + type_C.toString() +
+                                    "&type_D=" + type_D.toString() +
+                                    "&type_G=" + type_G.toString() +
+                                    "&type_K=" + type_K.toString() +
+                                    "&type_O=" + type_O.toString() +
+                                    "&type_T=" + type_T.toString() +
+                                    "&type_Z=" + type_Z.toString();
+                                xmlhttp.open("GET", url, true);
+                                xmlhttp.send();
+                            }
+                        </script>
                         <div class="col-auto text-info">
-                            <p>查询有一次中转的历时最短的两列车</p>
+                            <p class="font-weight-bold">查询一次中转且最快的两列车</p>
                         </div>
                     </div>
 
                 </form>
             </div>
         </div>
-    </div>
-    <div class="tab-pane fade" id="return" role="tabpanel" aria-labelledby="return-tab">
-        <div class="card"></div>
     </div>
 </div>
 
@@ -239,12 +330,11 @@ C D G K O T Z
 商务座 特等座 一等座 二等座 高级软卧 软卧 动卧 硬卧 软座 硬座 无座
 -->
 
-<table class="table table-striped">
+<table class="table table-striped" id="table_info">
     <thead><tr> <!-- 15 elements -->
         <th scope="col">车次</th>
         <th scope="col">出发站<br/>到达站</th>
         <th scope="col">出发时间<br/>到达时间</th>
-        <th scope="col">历时</th>
         <th scope="col">商务座</th>
         <th scope="col">特等座</th>
         <th scope="col">一等座</th>
@@ -258,27 +348,135 @@ C D G K O T Z
         <th scope="col">无座</th>
         <th scope="col">购买</th>
     </tr></thead>
-    <tbody>
+    <tbody id="table_body">
+        <tr><td colspan="15"><p class="h5">请在上方输入您要查询的列车</p></td></tr>
         <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-            <td>10</td>
-            <td>11</td>
-            <td>12</td>
-            <td>13</td>
-            <td>14</td>
-            <td>15</td>
-            <td><button type="button" class="btn btn-primary">购买</button></td>
+            <td>C100</td>
+            <td>北京<br/>上海</td>
+            <td>2019-03-28 08:00<br/>2019-03-28 08:01</td>
+            <td>无</td>
+            <td>无</td>
+            <td>2000<br>765.50元</td>
+            <td>2000<br>765.49元</td>
+            <td>2000<br>765.48元</td>
+            <td>无</td>
+            <td>无</td>
+            <td>无</td>
+            <td>无</td>
+            <td>无</td>
+            <td>无</td>
+            <td><button type="button" class="btn btn-primary btn-buy"
+                        data-toggle="modal" data-target="#buy_modal">购买</button></td>
         </tr>
-
+        <tr>
+            <td>C200</td>
+            <td>上海<br/>西安</td>
+            <td>2019-05-17 08:00<br/>2019-05-17 12:00</td>
+            <td>无</td>
+            <td>无</td>
+            <td>无</td>
+            <td>无</td>
+            <td>无</td>
+            <td>无</td>
+            <td>无</td>
+            <td>无</td>
+            <td>无</td>
+            <td>无</td>
+            <td>无</td>
+            <td><button class="btn btn-secondary" disabled>购买</button></td>
+        </tr>
     </tbody>
 </table>
 
+<!-- buy modal -->
+<div class="modal fade" id="buy_modal" tabindex="-1" role="dialog" aria-labelledby="buy_modal_label"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title font-weight-bold" id="buy_modal_label" align="center">购买</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <!-- buy modal body -->
+            <div class="modal-body">
+                请选择座位类型，确认无误后点击购买
+                <br><span class="text-info font-weight-bold">一次限够一张</span>
+                <br/><br/>
+                <form id="confirm_form" method="post" action="/tickets">
+                    <div class="form-group row">
+                        <label for="train_id" class="col-3">车次</label>
+                        <input type="text" class="form-control col-5" id="train_id" name="train_id" readonly>
+                    </div>
+                    <div class="form-group row">
+                        <label for="source" class="col-3">出发站</label>
+                        <input type="text" class="form-control col-5" id="source" name="source" readonly>
+                    </div>
+                    <div class="form-group row">
+                        <label for="terminal" class="col-3">到达站</label>
+                        <input type="text" class="form-control col-5" id="terminal" name="terminal" readonly>
+                    </div>
+                    <div class="form-group row">
+                        <label for="time_departure" class="col-3">出发时间</label>
+                        <input type="text" class="form-control col-5" id="time_departure" name="time_departure" readonly>
+                    </div>
+                    <div class="form-group row">
+                        <label for="time_arrival" class="col-3">到达时间</label>
+                        <input type="text" class="form-control col-5" id="time_arrival" readonly>
+                    </div>
+                    <div class="form-group row">
+                        <label for="seat_select" class="col-3">座位类型<br/>及价格</label>
+                        <select class="form-control col-5" id="seat_select" name="seat">
+                            <option>商务座 765.50元</option>
+                            <option>特等座 765.49元</option>
+                            <option>一等座 765.48元</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button type="submit" class="btn btn-primary" form="confirm_form">购买</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#table_info").on('click', '.btn-buy', function () {
+            const row = $(this).closest("tr");
+            const train_id = row.find("td:eq(0)").text();
+            const station = row.find("td:eq(1)").html().split("<br>"); // 0: source 1: terminal
+            const time = row.find("td:eq(2)").html().split("<br>"); // 0: departure 1: arrival
+
+            document.getElementById("train_id").value = train_id;
+            document.getElementById("source").value = station[0];
+            document.getElementById("terminal").value = station[1];
+            document.getElementById("time_departure").value = time[0];
+            document.getElementById("time_arrival").value = time[1];
+
+            const type = ["商务座", "特等座", "一等座", "二等座", "高级软卧", "软卧",
+                "动卧", "硬卧", "软座", "硬座", "无座"];
+            /*
+            3: 商务座  4: 特等座  5: 一等座  6: 二等座  7: 高级软卧  8: 软卧
+            9: 动卧   10: 硬卧   11: 软座   12: 硬座   13: 无座
+             */
+
+            var select_res = "";
+            for (var i = 0; i < type.length; i++) {
+                const str = row.find("td:eq(" + (i + 3).toString() + ")").html();
+                if (str === "无")
+                    continue;
+                const price = str.split("<br>")[1];
+                select_res += "<option>" + type[i] + " " + price + "</option>";
+            }
+            document.getElementById("seat_select").innerHTML = select_res;
+
+
+        });
+    });
+</script>
 {% endblock %}

@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+{% block web_title %}
+我的车票
+{% endblock %}
+{% block body_part %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h2 style="text-align: center">我的车票</h2>
+    </div>
+</div>
+<hr/>
+
+<!-- C D G K O T Z -->
+
+<div class="card">
+    <div class="card-body">
+        <form id="my_ticket_form">
+            <!-- row 1 -->
+            <div class="row">
+                <!-- datepicker -->
+                <label class="col-1 col-form-label" for="date" style="text-align: right">出发日</label>
+                <div class="col-5 input-group date" id="datepicker">
+                    <input type="text" class="form-control" id="date"
+                           name="date" placeholder="点击按钮选择出发日（留空则查询全部车票）">
+                    <span class="input-group-append">
+                        <span class="input-group-text">
+                            <span class="input-group-addon">
+                                <span class="fas fa-calendar-alt"></span>
+                            </span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+
+            <br/>
+            <!-- row 2 -->
+            <div class="row">
+                <div class="col-auto">车次类型：</div>
+                <div class="col-auto">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="type_C" value="type_C">
+                        <label class="form-check-label" for="type_C">C型车</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="type_D" value="type_D">
+                        <label class="form-check-label" for="type_D">D型车</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="type_G" value="type_G">
+                        <label class="form-check-label" for="type_G">G型车</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="type_K" value="type_K">
+                        <label class="form-check-label" for="type_K">K型车</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="type_O" value="type_O">
+                        <label class="form-check-label" for="type_O">O型车</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="type_T" value="type_T">
+                        <label class="form-check-label" for="type_T">T型车</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="type_Z" value="type_Z">
+                        <label class="form-check-label" for="type_Z">Z型车</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-primary" onclick="query_train()">查询</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#datepicker').datetimepicker({
+            dayViewHeaderFormat: 'YYYY年MMMM',
+            format: 'YYYY-MM-DD',
+            showClose: true
+        });
+    });
+</script>
+<script>
+    function query_train() {
+        const xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange=function () {
+            if (this.readyState == 4 && this.status == 200)
+                document.getElementById("table_body").innerHTML = this.responseText;
+        };
+        const date = document.getElementById("date").value;
+        const type_C = document.getElementById("type_C").checked;
+        const type_D = document.getElementById("type_D").checked;
+        const type_G = document.getElementById("type_G").checked;
+        const type_K = document.getElementById("type_K").checked;
+        const type_O = document.getElementById("type_O").checked;
+        const type_T = document.getElementById("type_T").checked;
+        const type_Z = document.getElementById("type_Z").checked;
+        const url = "my_ticket/ajax" +
+            "?date=" + date +
+            "&type_C=" + type_C.toString() +
+            "&type_D=" + type_D.toString() +
+            "&type_G=" + type_G.toString() +
+            "&type_K=" + type_K.toString() +
+            "&type_O=" + type_O.toString() +
+            "&type_T=" + type_T.toString() +
+            "&type_Z=" + type_Z.toString();
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+    }
+</script>
+
+<!--
+C D G K O T Z
+商务座 特等座 一等座 二等座 高级软卧 软卧 动卧 硬卧 软座 硬座 无座
+-->
+
+<table class="table table-striped" id="table_refund">
+    <thead><tr> <!-- 6 elements -->
+        <th scope="col">车次</th>
+        <th scope="col">出发站<br/>到达站</th>
+        <th scope="col">出发时间<br/>到达时间</th>
+        <th scope="col">座位类型</th>
+        <th scope="col">数量</th>
+        <th scope="col">退票</th>
+    </tr></thead>
+    <tbody id="table_body">
+        <tr>
+            <td>C101</td>
+            <td>北京<br>夏威夷</td>
+            <td>2019-03-28 08:00<br>2019-03-28 08:01</td>
+            <td>一等座</td>
+            <td>3</td>
+            <td><button type="button" class="btn btn-primary btn-refund"
+                        data-toggle="modal" data-target="#refund_modal">退票</button></td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- refund modal -->
+<div class="modal fade" id="refund_modal" tabindex="-1" role="dialog" aria-labelledby="refund_modal_label"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title font-weight-bold" id="refund_modal_label" align="center">退票</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <!-- refund modal body -->
+            <div class="modal-body">
+                您真的要退订当前车票一张吗？
+                <br><span class="text-info font-weight-bold">一次限退票一张</span>
+                <br/><br/>
+                <form id="confirm_form" method="post" action="/my_ticket">
+                    <div class="form-group row">
+                        <label for="train_id" class="col-3">车次</label>
+                        <input type="text" class="form-control col-5" id="train_id" name="train_id" readonly>
+                    </div>
+                    <div class="form-group row">
+                        <label for="source" class="col-3">出发站</label>
+                        <input type="text" class="form-control col-5" id="source" name="source" readonly>
+                    </div>
+                    <div class="form-group row">
+                        <label for="terminal" class="col-3">到达站</label>
+                        <input type="text" class="form-control col-5" id="terminal" name="terminal" readonly>
+                    </div>
+                    <div class="form-group row">
+                        <label for="time_departure" class="col-3">出发时间</label>
+                        <input type="text" class="form-control col-5" id="time_departure" name="time" readonly>
+                    </div>
+                    <div class="form-group row">
+                        <label for="time_arrival" class="col-3">到达时间</label>
+                        <input type="text" class="form-control col-5" id="time_arrival" readonly>
+                    </div>
+                    <div class="form-group row">
+                        <label for="seat" class="col-3">座位类型</label>
+                        <input type="text" class="form-control col-5" id="seat" name="seat" readonly>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button type="submit" class="btn btn-primary" form="confirm_form">确认退票</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#table_refund").on('click', '.btn-refund', function () {
+            const row = $(this).closest("tr");
+            const train_id = row.find("td:eq(0)").text();
+            const station = row.find("td:eq(1)").html().split("<br>"); // 0: source 1: terminal
+            const time = row.find("td:eq(2)").html().split("<br>"); // 0: departure 1: arrival
+            const seat = row.find("td:eq(3)").text();
+
+            document.getElementById("train_id").value = train_id;
+            document.getElementById("source").value = station[0];
+            document.getElementById("terminal").value = station[1];
+            document.getElementById("time_departure").value = time[0];
+            document.getElementById("time_arrival").value = time[1];
+            document.getElementById("seat").value = seat;
+        });
+    });
+</script>
+{% endblock %}

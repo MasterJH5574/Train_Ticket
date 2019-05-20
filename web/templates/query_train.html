@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block web_title %}
+车次查询
+{% endblock %}
+{% block body_part %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h2 style="text-align: center">车次查询</h2>
+
+        <hr/>
+
+        <form id="train_info_form" class="form-inline">
+            <div class="mx-auto form-inline">
+                <label for="train_id">车次编号：</label>
+                <input type="text" class="form-control" id="train_id"
+                       name="train_id" placeholder="输入待查询的车次编号">
+            </div>
+            <button type="button" class="btn btn-primary mx-auto" onclick="train_info_ajax()">查询</button>
+        </form>
+
+        <hr>
+        <div class="my-5" id="train_info_div">
+            <h3 style="text-align: center">C100次列车</h3>
+            <table class="table table-striped" id="train_info_table">
+                <thead><tr>
+                    <th scope="col">序号</th>
+                    <th scope="col">站名</th>
+                    <th scope="col">到站时间</th>
+                    <th scope="col">发车时间</th>
+                    <th scope="col">停靠时间</th>
+                </tr></thead>
+                <tbody id="table_body">
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function train_info_ajax() {
+        const xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200)
+                document.getElementById("train_info_div").innerHTML = this.responseText;
+        };
+
+        const train_id = document.getElementById("train_id").value;
+        const url = "query_train/query_train_ajax?train_id=" + train_id;
+
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+    }
+</script>
+{% endblock %}
