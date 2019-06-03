@@ -1,7 +1,22 @@
+html {
+  height: 100% !important;
+}
+
+body {
+  min-height: 100% !important;
+}
+
+.footer {
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    color: black !important;
+}
+
 .form_error {
-    color: #ff6824;
+    color: #ff6824 !important;
 }
 
 th, td {
-    text-align: center;
+    text-align: center !important;
 }

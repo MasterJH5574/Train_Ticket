@@ -2,15 +2,20 @@
 {% block web_title %}
     修改我的信息
 {% endblock %}
+{% block head_part %}
+<link rel="stylesheet" href="/static/password_strength/normalize.min.css">
+<link rel="stylesheet" href="/static/password_strength/password.css">
+<script src="/static/password_strength/password.js"></script>
+{% endblock %}
 {% block body_part %}
     <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-sm-6 offset-sm-3">
             <h2 style="text-align: center">修改我的信息</h2>
         </div>
     </div>
     <hr/>
     <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-sm-6 offset-sm-3">
             <form action="/modify_profile" method="post" id="profile_form">
                 <div class="form-group">
                     <label for="old_password">修改信息需验证旧密码</label>
@@ -23,9 +28,15 @@
                     <label for="username">新用户名</label>
                     <input type="text" class="form-control" id="username" name="username" placeholder="请输入您的新用户名">
                 </div>
-                <div class="form-group">
+                <div class="form-group form-2">
                     <label for="new_password">新密码</label>
                     <input type="password" class="form-control" id="new_password" name="new_password" placeholder="请输入新密码">
+                    <div class="progress-bar_wrap">
+                        <div class="progress-bar_item progress-bar_item-1"></div>
+                        <div class="progress-bar_item progress-bar_item-2"></div>
+                        <div class="progress-bar_item progress-bar_item-3"></div>
+                    </div>
+                    <span class="progress-bar_text">密码为空</span>
                 </div>
                 <div class="form-group">
                     <label for="email">新电子邮箱</label>
@@ -36,7 +47,7 @@
                     <input type="tel" class="form-control" id="phone" name="phone" placeholder="请输入新电话号码">
                 </div>
                 <div align="center">
-                    <a href="http://localhost:5000/" class="btn btn-secondary" role="button">返回首页</a>
+                    <a href="http://47.100.97.189/" class="btn btn-secondary" role="button">返回首页</a>
                     <button type="reset" class="btn btn-secondary">重置</button>
                     <button type="submit" class="btn btn-primary">提交修改</button>
                 </div>

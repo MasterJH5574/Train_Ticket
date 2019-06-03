@@ -1,0 +1,886 @@
+{% extends "base.html" %}
+{% block web_title %}
+    新建车次
+{% endblock %}
+{% block head_part %}
+<link rel="stylesheet" href="/static/jquery-labelauty.css">
+<link rel="stylesheet" href="/static/datepicker/bootstrap-datetimepicker.css">
+<script src="/static/jquery-labelauty.js"></script>
+<script src="/static/datepicker/bootstrap-datetimepicker.js"></script>
+{% endblock %}
+{% block body_part %}
+<style>
+    .seat_type {
+        display: inline-block;
+        margin: 18px 0;
+    }
+    th { width:100px; text-align:center; font-size:15px;}
+    td { width:100px; text-align:center; font-size:15px;}
+</style>
+<script>
+$(function(){
+    $(':input').labelauty();
+});
+</script>
+
+<div class="row">
+    <div class="col-sm-6 offset-sm-3">
+        <h2 style="text-align: center">新建车次</h2>
+    </div>
+</div>
+<hr/>
+
+<div class="row">
+    <div class="col-md-12">
+        <form action="/add_train" method="post" id="add_train_form" onsubmit="return check()">
+           
+            <div class="form-group">
+                <label for="train_id" style="font-size:15px">车次编号</label>
+                <input type="text" class="form-control" style="font-size:15px" id="train_id" name="train_id" placeholder="请输入要新建的车次编号">
+            </div>
+
+            <div class="form-group">
+                <label for="train_name" style="font-size:15px">车次</label>
+                <input type="text" class="form-control" style="font-size:15px" id="train_name" name="train_name" placeholder="请输入车次">
+            </div>
+
+            <div class="form-group">
+                <label for="train_type" style="font-size:15px">车次类型</label>
+                <select class="custom-select" id="train_type" name="train_type" style="font-size:15px" placeholder="请选择车次类型">
+                    <option value="C" >C-城际动车</option>
+                    <option value="D" >D-普通动车</option>
+                    <option value="G" >G-高速动车</option>
+                    <option value="K" >K-快速列车</option>
+                    <option value="O" >O-普通快车</option>
+                    <option value="T" >T-特快列车</option>
+                    <option value="Z" >Z-直达特快</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <li class="seat_type">
+                    <input type="checkbox" name="bussiness_seat" id="bussiness_seat"
+                           onclick="modifyTicket()" data-labelauty="商务座"></li>
+                <li class="seat_type">
+                    <input type="checkbox" name="principal_seat" id="principal_seat"
+                           onclick="modifyTicket()"  data-labelauty="特等座"></li>
+                <li class="seat_type">
+                    <input type="checkbox" name="first_seat" id="first_seat"
+                           onclick="modifyTicket()" data-labelauty="一等座"></li>
+                <li class="seat_type">
+                    <input type="checkbox" name="second_seat" id="second_seat"
+                           onclick="modifyTicket()" data-labelauty="二等座"></li>
+                <li class="seat_type">
+                    <input type="checkbox" name="soft2_bed" id="soft2_bed"
+                           onclick="modifyTicket()" data-labelauty="高级软卧"></li>
+                <li class="seat_type">
+                    <input type="checkbox" name="soft_bed" id="soft_bed"
+                           onclick="modifyTicket()" data-labelauty="软卧"></li>
+                <li class="seat_type">
+                    <input type="checkbox" name="D_bed" id="D_bed"
+                           onclick="modifyTicket()" data-labelauty="动卧"></li>
+                <li class="seat_type">
+                    <input type="checkbox" name="hard_bed" id="hard_bed"
+                           onclick="modifyTicket()" data-labelauty="硬卧"></li>
+                <li class="seat_type">
+                    <input type="checkbox" name="soft_seat" id="soft_seat"
+                           onclick="modifyTicket()" data-labelauty="软座"></li>
+                <li class="seat_type">
+                    <input type="checkbox" name="hard_seat" id="hard_seat"
+                           onclick="modifyTicket()" data-labelauty="硬座"></li>
+                <li class="seat_type">
+                    <input type="checkbox" name="no_seat" id="no_seat"
+                           onclick="modifyTicket()" data-labelauty="无座"></li>
+                <p id="ticket_number" style="font-size:15px">未添加座位类型</p>
+            </div>
+
+            <div>
+                <button id="create_row" type="button" class="btn btn-success" style="font-size:15px"> 新增车站 </button>
+                <button id="delete_row" type="button" class="btn btn-info" style="font-size:15px"> 删除车站 </button>
+                <br/>
+                <table id="station_table" style="font-size:15px;text-align:center" name="station_table" class='table table-striped table-bordered'>
+                     <thead>
+                         <tr id="title_line">
+                            <th style='width:100px;text-align:center;font-size:15px'>勾选后删除</th>
+                            <th style='width:100px;text-align:center;font-size:15px'>车站</th>
+                            <th style='width:100px;text-align:center;font-size:15px'>到达时间</th>
+                            <th style='width:100px;text-align:center;font-size:15px'>离开时间</th>
+                            <th style='width:100px;text-align:center;font-size:15px'>停车时间</th>
+                         </tr>
+                    </thead>
+                    <tbody id="stationRow">
+                    </tbody>
+                </table>
+                 <p id="station_number" style="font-size:15px">未添加车站</p>
+            </div>
+
+            <div align="center">
+                <button type="submit" class="btn btn-primary" style="font-size:15px">提交</button>
+                <button type="reset" class="btn btn-secondary" style="font-size:15px">重置</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<script>
+    function modifyTicket() {
+        var ticket_number = 0;
+        if(document.getElementById("bussiness_seat").checked) {
+            ticket_number++;
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title1") {
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(!flag_seat) {
+                var th = document.createElement("th");
+                th.name = "title1";
+                th.innerHTML="<th style='width:100px;text-align:center'>商务座</th>";
+                tn.appendChild(th);
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    if(tr.name == "stationflag") {
+                        var td=document.createElement("td");
+                        td.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='business_seat_price' min='0.00', step='0.01' value='0.00' />";
+                        td.name="business_seat_price";
+                        tr.appendChild(td);
+                    }
+                }
+            }
+        }
+        else {
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title1") {
+                    tn.removeChild(tn.childNodes[i]);
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(flag_seat) {
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    for(var j = 0; j < tr.childNodes.length; ++j) {
+                        if(tr.childNodes[j].name == "business_seat_price") {
+                            tr.removeChild(tr.childNodes[j]);
+                        }
+                    }
+                }
+            }
+        }
+
+        if(document.getElementById("principal_seat").checked) {
+            ticket_number++;
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title2") {
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(!flag_seat) {
+                var th = document.createElement("th");
+                th.name = "title2";
+                th.innerHTML="<th style='width:100px;text-align:center'>特等座</th>";
+                tn.appendChild(th);
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    if(tr.name == "stationflag") {
+                        var td=document.createElement("td");
+                        td.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='principal_seat_price' min='0.00', step='0.01' value='0.00' />";
+                        td.name="principal_seat_price";
+                        tr.appendChild(td);
+                    }
+                }
+            }
+        }
+        else {
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title2") {
+                    tn.removeChild(tn.childNodes[i]);
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(flag_seat) {
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    for(var j = 0; j < tr.childNodes.length; ++j) {
+                        if(tr.childNodes[j].name == "principal_seat_price") {
+                            tr.removeChild(tr.childNodes[j]);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        if(document.getElementById("first_seat").checked) {
+            ticket_number++;
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title3") {
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(!flag_seat) {
+                var th = document.createElement("th");
+                th.name = "title3";
+                th.innerHTML="<th style='width:100px;text-align:center'>一等座</th>";
+                tn.appendChild(th);
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    if(tr.name == "stationflag") {
+                        var td=document.createElement("td");
+                        td.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='first_seat_price' min='0.00', step='0.01' value='0.00' />";
+                        td.name="first_seat_price";
+                        tr.appendChild(td);
+                    }
+                }
+            }
+        }
+        else {
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title3") {
+                    tn.removeChild(tn.childNodes[i]);
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(flag_seat) {
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    for(var j = 0; j < tr.childNodes.length; ++j) {
+                        if(tr.childNodes[j].name == "first_seat_price") {
+                            tr.removeChild(tr.childNodes[j]);
+                        }
+                    }
+                }
+            }
+        }
+
+        if(document.getElementById("second_seat").checked) {
+            ticket_number++;
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title4") {
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(!flag_seat) {
+                var th = document.createElement("th");
+                th.name = "title4";
+                th.innerHTML="<th style='width:100px;text-align:center'>二等座</th>";
+                tn.appendChild(th);
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    if(tr.name == "stationflag") {
+                        var td=document.createElement("td");
+                        td.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='second_seat_price' min='0.00', step='0.01' value='0.00' />";
+                        td.name="second_seat_price";
+                        tr.appendChild(td);
+                    }
+                }
+            }
+        }
+        else {
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title4") {
+                    tn.removeChild(tn.childNodes[i]);
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(flag_seat) {
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    for(var j = 0; j < tr.childNodes.length; ++j) {
+                        if(tr.childNodes[j].name == "second_seat_price") {
+                            tr.removeChild(tr.childNodes[j]);
+                        }
+                    }
+                }
+            }
+        }
+
+        if(document.getElementById("soft2_bed").checked) {
+            ticket_number++;
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title5") {
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(!flag_seat) {
+                var th = document.createElement("th");
+                th.name = "title5";
+                th.innerHTML="<th style='width:100px;text-align:center'>高级软卧</th>";
+                tn.appendChild(th);
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    if(tr.name == "stationflag") {
+                        var td=document.createElement("td");
+                        td.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='soft2_bed_price' min='0.00', step='0.01' value='0.00' />";
+                        td.name="soft2_bed_price";
+                        tr.appendChild(td);
+                    }
+                }
+            }
+        }
+        else {
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title5") {
+                    tn.removeChild(tn.childNodes[i]);
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(flag_seat) {
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    for(var j = 0; j < tr.childNodes.length; ++j) {
+                        if(tr.childNodes[j].name == "soft2_bed_price") {
+                            tr.removeChild(tr.childNodes[j]);
+                        }
+                    }
+                }
+            }
+        }
+
+        if(document.getElementById("soft_bed").checked) {
+            ticket_number++;
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title6") {
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(!flag_seat) {
+                var th = document.createElement("th");
+                th.name = "title6";
+                th.innerHTML="<th style='width:100px;text-align:center'>软卧</th>";
+                tn.appendChild(th);
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    if(tr.name == "stationflag") {
+                        var td=document.createElement("td");
+                        td.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='soft_bed_price' min='0.00', step='0.01' value='0.00' />";
+                        td.name="soft_bed_price";
+                        tr.appendChild(td);
+                    }
+                }
+            }
+        }
+        else {
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title6") {
+                    tn.removeChild(tn.childNodes[i]);
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(flag_seat) {
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    for(var j = 0; j < tr.childNodes.length; ++j) {
+                        if(tr.childNodes[j].name == "soft_bed_price") {
+                            tr.removeChild(tr.childNodes[j]);
+                        }
+                    }
+                }
+            }
+        }
+
+        if(document.getElementById("D_bed").checked) {
+            ticket_number++;
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title7") {
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(!flag_seat) {
+                var th = document.createElement("th");
+                th.name = "title7";
+                th.innerHTML="<th style='width:100px;text-align:center'>动卧</th>";
+                tn.appendChild(th);
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    if(tr.name == "stationflag") {
+                        var td=document.createElement("td");
+                        td.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='D_bed_price' min='0.00', step='0.01' value='0.00' />";
+                        td.name="D_bed_price";
+                        tr.appendChild(td);
+                    }
+                }
+            }
+        }
+        else {
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title7") {
+                    tn.removeChild(tn.childNodes[i]);
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(flag_seat) {
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    for(var j = 0; j < tr.childNodes.length; ++j) {
+                        if(tr.childNodes[j].name == "D_bed_price") {
+                            tr.removeChild(tr.childNodes[j]);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        if(document.getElementById("hard_bed").checked) {
+            ticket_number++;
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title8") {
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(!flag_seat) {
+                var th = document.createElement("th");
+                th.name = "title8";
+                th.innerHTML="<th style='width:100px;text-align:center'>硬卧</th>";
+                tn.appendChild(th);
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    if(tr.name == "stationflag") {
+                        var td=document.createElement("td");
+                        td.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='hard_bed_price' min='0.00', step='0.01' value='0.00' />";
+                        td.name="hard_bed_price";
+                        tr.appendChild(td);
+                    }
+                }
+            }
+        }
+        else {
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title8") {
+                    tn.removeChild(tn.childNodes[i]);
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(flag_seat) {
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    for(var j = 0; j < tr.childNodes.length; ++j) {
+                        if(tr.childNodes[j].name == "hard_bed_price") {
+                            tr.removeChild(tr.childNodes[j]);
+                        }
+                    }
+                }
+            }
+        }
+
+        if(document.getElementById("soft_seat").checked) {
+            ticket_number++;
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title9") {
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(!flag_seat) {
+                var th = document.createElement("th");
+                th.name = "title9";
+                th.innerHTML="<th style='width:100px;text-align:center'>软座</th>";
+                tn.appendChild(th);
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    if(tr.name == "stationflag") {
+                        var td=document.createElement("td");
+                        td.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='soft_seat_price' min='0.00', step='0.01' value='0.00' />";
+                        td.name="soft_seat_price";
+                        tr.appendChild(td);
+                    }
+                }
+            }
+        }
+        else {
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title9") {
+                    tn.removeChild(tn.childNodes[i]);
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(flag_seat) {
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    for(var j = 0; j < tr.childNodes.length; ++j) {
+                        if(tr.childNodes[j].name == "soft_seat_price") {
+                            tr.removeChild(tr.childNodes[j]);
+                        }
+                    }
+                }
+            }
+        }
+
+        if(document.getElementById("hard_seat").checked) {
+            ticket_number++;
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title10") {
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(!flag_seat) {
+                var th = document.createElement("th");
+                th.name = "title10";
+                th.innerHTML="<th style='width:100px;text-align:center'>硬座</th>";
+                tn.appendChild(th);
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    if(tr.name == "stationflag") {
+                        var td=document.createElement("td");
+                        td.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='hard_seat_price' min='0.00', step='0.01' value='0.00' />";
+                        td.name="hard_seat_price";
+                        tr.appendChild(td);
+                    }
+                }
+            }
+        }
+        else {
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title10") {
+                    tn.removeChild(tn.childNodes[i]);
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(flag_seat) {
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    for(var j = 0; j < tr.childNodes.length; ++j) {
+                        if(tr.childNodes[j].name == "hard_seat_price") {
+                            tr.removeChild(tr.childNodes[j]);
+                        }
+                    }
+                }
+            }
+        }
+
+        if(document.getElementById("no_seat").checked) {
+            ticket_number++;
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title11") {
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(!flag_seat) {
+                var th = document.createElement("th");
+                th.name = "title11";
+                th.innerHTML="<th style='width:100px;text-align:center'>无座</th>";
+                tn.appendChild(th);
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    if(tr.name == "stationflag") {
+                        var td=document.createElement("td");
+                        td.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='no_seat_price' min='0.00', step='0.01' value='0.00' />";
+                        td.name="soft_seat_price";
+                        tr.appendChild(td);
+                    }
+                }
+            }
+        }
+        else {
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title11") {
+                    tn.removeChild(tn.childNodes[i]);
+                    flag_seat = 1;
+                    break;
+                }
+            }
+            if(flag_seat) {
+                var editTable = document.getElementById("stationRow");
+                for(var i = 0; i < editTable.childNodes.length; ++i) {
+                    var tr = editTable.childNodes[i];
+                    for(var j = 0; j < tr.childNodes.length; ++j) {
+                        if(tr.childNodes[j].name == "no_seat_price") {
+                            tr.removeChild(tr.childNodes[j]);
+                        }
+                    }
+                }
+            }
+        }
+
+        if(ticket_number == 0) {
+            document.getElementById("ticket_number").innerHTML="未添加座位类型";
+        }
+        else {
+            document.getElementById("ticket_number").innerHTML="已添加<strong>"+ticket_number+"</strong>种座位";
+        }
+    }
+    function modifyStation() {
+       var stationSet = document.getElementsByName("station");
+        var station_number=stationSet.length;
+        if(station_number == 0) {
+            document.getElementById("station_number").innerHTML="未添加车站";
+        }
+        else {
+            document.getElementById("station_number").innerHTML="已添加<strong>"+station_number+"</strong>个车站";
+        }
+    }
+    $('#create_row').click(function() {
+            var editTable=document.getElementById("stationRow");
+            var tr=document.createElement("tr");
+            tr.name="stationflag";
+            var td0=document.createElement("td");
+            td0.innerHTML="<input type='checkbox' style='text-align:center' class='form-control' name='checkRow' />";
+            var td1=document.createElement("td");
+            td1.innerHTML="<input type='text' style='width:100%;text-align:center;font-size:15px' class='form-control' name='station' />";
+            var td2=document.createElement("td");
+            td2.innerHTML="<input type='time' value='00:00' style='width:100%;text-align:center;font-size:15px' class='form-control datetimepicker' name='arrive_time' />";
+            var td3=document.createElement("td");
+            td3.innerHTML="<input type='time' value='00:00' style='width:100%;text-align:center;font-size:15px' class='form-control datetimepicker' name='start_time' />";
+            var td4=document.createElement("td");
+            td4.innerHTML="<input type='time' value='00:00' style='width:100%;text-align:center;font-size:15px' class='form-control datetimepicker' name='overstop_time' value='00:00' />";
+
+            tr.appendChild(td0);
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(td4);
+
+            var tn = document.getElementById("title_line");
+            var flag_seat = 0;
+            for(var i = 1; i < tn.childNodes.length; ++i) {
+                if(tn.childNodes[i].name == "title1") {
+                    var tdn=document.createElement("td");
+                    tdn.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='business_seat_price' min='0.00', step='0.01' value='0.00' />";
+                    tdn.name="business_seat_price";
+                    tr.appendChild(tdn);
+                }
+                if(tn.childNodes[i].name == "title2") {
+                    var tdn=document.createElement("td");
+                    tdn.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='principal_seat_price' min='0.00', step='0.01' value='0.00' />";
+                    tdn.name="principal_seat_price";
+                    tr.appendChild(tdn);
+                }
+                if(tn.childNodes[i].name == "title3") {
+                    var tdn=document.createElement("td");
+                    tdn.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='first_seat_price' min='0.00', step='0.01' value='0.00' />";
+                    tdn.name="first_seat_price";
+                    tr.appendChild(tdn);
+                }
+                if(tn.childNodes[i].name == "title4") {
+                    var tdn=document.createElement("td");
+                    tdn.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='second_seat_price' min='0.00', step='0.01' value='0.00' />";
+                    tdn.name="second_seat_price";
+                    tr.appendChild(tdn);
+                }
+                if(tn.childNodes[i].name == "title5") {
+                    var tdn=document.createElement("td");
+                    tdn.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='soft2_bed_price' min='0.00', step='0.01' value='0.00' />";
+                    tdn.name="soft2_bed_price";
+                    tr.appendChild(tdn);
+                }
+                if(tn.childNodes[i].name == "title6") {
+                    var tdn=document.createElement("td");
+                    tdn.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='soft_bed_price' min='0.00', step='0.01' value='0.00' />";
+                    tdn.name="soft_bed_price";
+                    tr.appendChild(tdn);
+                }
+                if(tn.childNodes[i].name == "title7") {
+                    var tdn=document.createElement("td");
+                    tdn.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='D_bed_price' min='0.00', step='0.01' value='0.00' />";
+                    tdn.name="D_bed_price";
+                    tr.appendChild(tdn);
+                }
+                if(tn.childNodes[i].name == "title8") {
+                    var tdn=document.createElement("td");
+                    tdn.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='hard_bed_price' min='0.00', step='0.01' value='0.00' />";
+                    tdn.name="hard_bed_price";
+                    tr.appendChild(tdn);
+                }
+                if(tn.childNodes[i].name == "title9") {
+                    var tdn=document.createElement("td");
+                    tdn.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='soft_seat_price' min='0.00', step='0.01' value='0.00' />";
+                    tdn.name="soft_seat_price";
+                    tr.appendChild(tdn);
+                }
+                if(tn.childNodes[i].name == "title10") {
+                    var tdn=document.createElement("td");
+                    tdn.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='hard_seat_price' min='0.00', step='0.01' value='0.00' />";
+                    tdn.name="hard_seat_price";
+                    tr.appendChild(tdn);
+                }
+                if(tn.childNodes[i].name == "title11") {
+                    var tdn=document.createElement("td");
+                    tdn.innerHTML="<input type='number' style='width:100%;text-align:center;font-size:15px' class='form-control' name='no_seat_price' min='0.00', step='0.01' value='0.00' />";
+                    tdn.name="no_seat_price";
+                    tr.appendChild(tdn);
+                }
+            }
+
+            editTable.appendChild(tr);
+            var stationSet = document.getElementsByName("station");
+            var station_number=stationSet.length;
+            if(station_number == 0) {
+                document.getElementById("station_number").innerHTML="未添加车站";
+            }
+            else {
+                document.getElementById("station_number").innerHTML="已添加<strong>"+station_number+"</strong>个车站";
+            }
+        })
+    $('#delete_row').click(function(){
+        var editTable=document.getElementById("stationRow");
+        if(confirm("确定删除所选车站?")){
+            var checkRow=document.getElementsByName("checkRow");
+            for(var i=0;i<checkRow.length;i++){
+                if(checkRow[i].checked){
+                    var tr=checkRow[i].parentNode.parentNode;
+                    editTable.removeChild(tr);
+                    i--;
+                }
+            }
+        }
+        var stationSet = document.getElementsByName("station");
+        var station_number=stationSet.length;
+        if(station_number == 0) {
+            document.getElementById("station_number").innerHTML="未添加车站";
+        }
+        else {
+            document.getElementById("station_number").innerHTML="已添加<strong>"+station_number+"</strong>个车站";
+        }
+    })
+    function check() {
+        var warning = "您提交的车次信息有如下错误：\n";
+        if(document.getElementById("train_id").value == "") warning += "*未输入车次编号\n";
+        if(document.getElementById("train_name").value == "") warning += "*未输入车次\n";
+        var stationSet = document.getElementsByName("station");
+        if(stationSet.length < 2) {
+            warning += "*车站数目不足2\n";
+        }
+        var ticket_number = 0;
+        if(document.getElementById("bussiness_seat").checked) ticket_number++;
+        if(document.getElementById("principal_seat").checked) ticket_number++;
+        if(document.getElementById("first_seat").checked) ticket_number++;
+        if(document.getElementById("second_seat").checked) ticket_number++;
+        if(document.getElementById("soft2_bed").checked) ticket_number++;
+        if(document.getElementById("soft_bed").checked) ticket_number++;
+        if(document.getElementById("D_bed").checked) ticket_number++;
+        if(document.getElementById("hard_bed").checked) ticket_number++;
+        if(document.getElementById("soft_seat").checked) ticket_number++;
+        if(document.getElementById("hard_seat").checked) ticket_number++;
+        if(document.getElementById("no_seat").checked) ticket_number++;
+        if(ticket_number == 0) {
+            warning += "*请至少添加一种座位\n";
+        }
+        if(warning != "您提交的车次信息有如下错误：\n") {
+            alert(warning);
+            return false;
+        }
+        return true;
+    }
+    $().ready(function() {
+        $("#add_train_form").validate({
+            errorClass: "form_error",
+            rules: {
+                train_id: {
+                    noSpace: true,
+                    minlength: 1,
+                    byteRangeLength: 20
+                },
+                train_name: {
+                    noSpace: true,
+                    minlength: 1,
+                    byteRangeLength: 20
+                }
+            },
+            messages: {
+                train_id: {
+                    noSpace: "车次编号不得包含空格",
+                    minlength: "车次编号长度不得低于1位",
+                    byteRangeLength: "车次编号长度不得超过20位"
+                },
+                train_name: {
+                    noSpace: "车次不得包含空格",
+                    minlength: "车次长度不得低于1位",
+                    byteRangeLength: "车次长度不得超过20位"
+                }
+            }
+        })
+    });
+    $('.datetimepicker').datetimepicker({
+        format:'HH:mm',
+        hours24: true
+    });
+
+</script>
+
+{% endblock %}

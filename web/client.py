@@ -1,4 +1,4 @@
-# filename client.py
+# -*- coding: utf-8 -*-
 
 import socket
 
@@ -13,11 +13,27 @@ def send(message):
         s.settimeout(600)
         s.connect((host, port))
         s.send(message.encode('utf-8'))
+        res = s.recv(1024).decode('utf-8')
+        s.close()
+        return res
+    finally:
+        s.close()
+
+
+'''
+def send(message):
+    global s
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(600)
+        s.connect((host, port))
+        s.send(message.encode('utf-8'))
 
         res_list = []
         while True:
             d = s.recv(1024)
             if d:
+                print(d)
                 res_list.append(d.decode('utf-8'))
             else:
                 break
@@ -26,26 +42,29 @@ def send(message):
         return res
     finally:
         s.close()
+'''
 
 
 def login(user_id, password):
-    return int(send("login {} {}\n\0".format(user_id, password)))
+    x = int(send("login {} {}".format(user_id, password)))
+    print(x)
+    return x
 
 
 def register(username, password, email, phone):
-    return int(send("register {} {} {} {}\n\0".format(username, password, email, phone)))
+    return int(send("register {} {} {} {}".format(username, password, email, phone)))
 
 
 def query_profile(user_id):
-    return send("query_profile {}\n\0".format(user_id))
+    return send("query_profile {}".format(user_id))
 
 
 def query_password(user_id):
-    return send("query_password {}\n\0".format(user_id))
+    return send("query_password {}".format(user_id))
 
 
 def modify_profile(user_id, username, password, email, phone):
-    return int(send("modify_profile {} {} {} {} {}\n\0".format(user_id, username, password, email, phone)))
+    return int(send("modify_profile {} {} {} {} {}".format(user_id, username, password, email, phone)))
 
 
 def get_privilege(user_id):
@@ -278,3 +297,83 @@ def query_order_all(user_id, catalog):
 
 def refund_ticket(user_id, train_id, source, terminal, date, seat):
     return int(send("refund_ticket {} {} {} {} {} {}".format(user_id, str(1), train_id, source, terminal, date, seat)))
+
+
+def add_train(train_id, train_name, train_type, ticket, station, arrive_time, start_time, overstop_time, bussiness_seat_price, principal_seat_price, first_seat_price, second_seat_price, soft2_bed_price, soft_bed_price, D_bed_price, hard_bed_price, soft_seat_price, hard_seat_price, no_seat_price):
+    total_station = len(station)
+    total_ticket = len(ticket)
+    s = ("add_train {} {} {} {} {} ".format(train_id, train_name, train_type, total_station, total_ticket)) + " ".join(ticket)
+    for i in range(total_station):
+        now = "\n" + station[i] + " " + arrive_time[i] + " " + start_time[i] + " " + overstop_time[i]
+        if bussiness_seat_price:
+            now = now + " " + bussiness_seat_price[i]
+        if principal_seat_price:
+            now = now + " " + principal_seat_price[i]
+        if first_seat_price:
+            now = now + " " + first_seat_price[i]
+        if second_seat_price:
+            now = now + " " + second_seat_price[i]
+        if soft2_bed_price:
+            now = now + " " + soft2_bed_price[i]
+        if soft_bed_price:
+            now = now + " " + soft_bed_price[i]
+        if D_bed_price:
+            now = now + " " + D_bed_price[i]
+        if hard_bed_price:
+            now = now + " " + hard_bed_price[i]
+        if soft_seat_price:
+            now = now + " " + soft_seat_price[i]
+        if hard_seat_price:
+            now = now + " " + hard_seat_price[i]
+        if no_seat_price:
+            now = now + " " + no_seat_price[i]
+        s = s + now
+    return int(send(s))
+
+
+def modify_train(train_id, train_name, train_type, ticket, station, arrive_time, start_time, overstop_time, bussiness_seat_price, principal_seat_price, first_seat_price, second_seat_price, soft2_bed_price, soft_bed_price, D_bed_price, hard_bed_price, soft_seat_price, hard_seat_price, no_seat_price):
+    total_station = len(station)
+    total_ticket = len(ticket)
+    s = ("add_train {} {} {} {} {} ".format(train_id, train_name, train_type, total_station, total_ticket)) + " ".join(ticket)
+    for i in range(total_station):
+        now = "\n" + station[i] + " " + arrive_time[i] + " " + start_time[i] + " " + overstop_time[i]
+        if bussiness_seat_price:
+            now = now + " " + bussiness_seat_price[i]
+        if principal_seat_price:
+            now = now + " " + principal_seat_price[i]
+        if first_seat_price:
+            now = now + " " + first_seat_price[i]
+        if second_seat_price:
+            now = now + " " + second_seat_price[i]
+        if soft2_bed_price:
+            now = now + " " + soft2_bed_price[i]
+        if soft_bed_price:
+            now = now + " " + soft_bed_price[i]
+        if D_bed_price:
+            now = now + " " + D_bed_price[i]
+        if hard_bed_price:
+            now = now + " " + hard_bed_price[i]
+        if soft_seat_price:
+            now = now + " " + soft_seat_price[i]
+        if hard_seat_price:
+            now = now + " " + hard_seat_price[i]
+        if no_seat_price:
+            now = now + " " + no_seat_price[i]
+        s = s + now
+    return int(send(s))
+
+
+def sale_train(train_id):
+    return int(send("sale_train {}".format(train_id)))
+
+
+def delete_train(train_id):
+    return int(send("delete_train {}".format(train_id)))
+
+
+def exist_train(train_id):
+    return int(send("exist_train {}".format(train_id)))
+
+
+def query_train(train_id):
+    return send("query_train {}".format(train_id))

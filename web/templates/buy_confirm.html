@@ -4,7 +4,7 @@
 {% endblock %}
 {% block body_part %}
 <div class="row">
-    <div class="col-md-6 offset-md-3">
+    <div class="col-sm-6 offset-sm-3">
         <h2 style="text-align: center">购买车票</h2>
     </div>
 </div>
@@ -25,13 +25,13 @@
         </tr></thead>
         <tbody id="table_body">
             <tr>
-                <td id="train_id">{{ train_id }}</td>
-                <td id="source">{{ source }}</td>
-                <td id="terminal">{{ terminal }}</td>
-                <td id="time_departure">{{ time_departure }}</td>
+                <td id="train_id">{{ train_id.decode('utf-8') }}</td>
+                <td id="source">{{ source.decode('utf-8') }}</td>
+                <td id="terminal">{{ terminal.decode('utf-8') }}</td>
+                <td id="time_departure">{{ time_departure.decode('utf-8') }}</td>
                 <td> 1 </td>
-                <td id="seat">{{ seat }}</td>
-                <td>{{ price }}</td>
+                <td id="seat">{{ seat.decode('utf-8') }}</td>
+                <td>{{ price.decode('utf-8') }}</td>
             </tr>
         </tbody>
     </table>

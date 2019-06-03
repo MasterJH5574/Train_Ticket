@@ -2,3 +2,94 @@
 {% block web_title %}
     首页
 {% endblock %}
+{% block head_part %}
+<script src="/static/station_list.js"></script>
+{% endblock %}
+{% block body_part %}
+<div class="jumbotron" style="min-height: 400px">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card border-info bg-transparent p-3 m-1">
+                <h1>欢迎来到<br>D24-103！</h1>
+                <p class="lead">睿涵小哥哥在等你哟~</p>
+                <div style="text-align: center">
+                    <iframe width="130" scrolling="no" height="120" frameborder="0" allowtransparency="true"
+                            src="//i.tianqi.com/index.php?c=code&id=4&bgc=%23&bdc=%23&icon=1&wind=1&num=1&site=14"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card border-info bg-transparent p-3 m-1">
+                <h4 style="text-align: center" class="font-weight-bold">快捷查询</h4>
+                <form id="quick_query" method="get" action="/tickets">
+                    <div class="form-group m-1">
+                        <label for="source_main">出发站：</label>
+                        <input type="text" class="form-control bg-transparent input-group-sm"
+                               id="source_main" name="source_main" placeholder="请输入出发站">
+                    </div>
+                    <div class="form-group m-1">
+                        <label for="terminal_main">到达站：</label>
+                        <input type="text" class="form-control bg-transparent"
+                               id="terminal_main" name="terminal_main" placeholder="请输入到达站">
+                    </div>
+                    <div class="form-group m-1">
+                        <label for="date">出发日：</label>
+                        <div class="input-group" id="datepicker">
+                            <input type="text" class="form-control bg-transparent input-group-sm"
+                                   id="date" name="date" placeholder="点击按钮选择出发日">
+                            <span class="input-group-append">
+                                <span class="input-group-text">
+                                    <span class="input-group-addon" style="cursor: pointer;">
+                                        <span class="fas fa-calendar-alt"></span>
+                                    </span>
+                                </span>
+                            </span>
+                        </div>
+                        <script>
+                            $(function () {
+                                $('#datepicker').datetimepicker({
+                                    dayViewHeaderFormat: 'YYYY年MMMM',
+                                    format: 'YYYY-MM-DD',
+                                    showClose: true
+                                });
+                            });
+                        </script>
+                    </div>
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary mt-sm-2">查询</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card border-info bg-transparent p-3 m-1">
+                <h4 style="text-align: center" class="font-weight-bold">一言</h4>
+                <p id="hitokoto_text" style="text-indent: 2em"></p>
+                <p id="hitokoto_from" style="text-align: right"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        background-color: #e9ecef;
+        border-width: 1.5px;
+        min-height: 345px;
+    }
+</style>
+<script>
+    window.onload = function () {
+        const xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange=function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var data = JSON.parse(this.responseText);
+                document.getElementById("hitokoto_text").innerHTML = "『" + data.hitokoto + "』";
+                document.getElementById("hitokoto_from").innerText = "——「" + data.from + "」";
+            }
+        };
+        xmlhttp.open("GET", "https://v1.hitokoto.cn?c=d&rand=" + Math.random(), true);
+        xmlhttp.send();
+    }
+</script>
+{% endblock %}

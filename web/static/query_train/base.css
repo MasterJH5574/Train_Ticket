@@ -1,0 +1,147 @@
+@charset "UTF-8";
+
+.fcc:after {
+    clear: both;
+    display: block;
+    visibility: hidden;
+    height: 0;
+    content: "."
+}
+
+.fcc {
+    display: block;
+    zoom: 1;
+    position: relative
+}
+
+.checi_info {
+    padding: 10px 0 0;
+    background: #fff;
+    border: 1px solid #ccc;
+}
+.checi_info .subHd {
+    padding: 0 10px 10px 220px;
+    position: relative;
+}
+
+.checi_info .subHd i {
+    display: block;
+    width: 14px;
+    height: 9px;
+    background: url(../../images/sprite_result.png) -104px -80px no-repeat;
+    position: absolute;
+    bottom: -1px;
+    left: 30px;
+    z-index: 2
+}
+
+.checi_info p {
+    font-size: 16px;
+    color: #000;
+    line-height: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+}
+
+.checi_info ul {
+    background: #f1f1ef;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding: 5px 10px
+}
+
+.checi_info ul li {
+    width: 300px;
+    float: left;
+    line-height: 30px;
+    font-size: 14px
+}
+
+.checi_info ul li .label {
+    display: inline-block;
+    float: left;
+    margin-right: 20px
+}
+
+.checi_info ul li i {
+    float: left;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url(../../images/sprite_result.png) no-repeat;
+    vertical-align: middle;
+    margin-top: 7px;
+    margin-right: 4px
+}
+
+.checi_info ul li i.origin {
+    background-position: -30px -64px
+}
+
+.checi_info ul li i.end {
+    background-position: -52px -64px
+}
+
+.checi_info ul li i.over {
+    background-position: -74px -64px
+}
+
+.checi_info ul li .station {
+    float: left;
+    display: inline-block;
+    margin-right: 30px
+}
+
+.checi_info table {
+    margin: 12px 12px 0;
+}
+
+.checi_info table tbody tr td {
+    text-align: center;
+    padding: 5px
+}
+
+.checi_info img {
+    float: left;
+    margin: 0 10px;
+}
+
+.pageK .list_tit .adv548,
+.checi_info .subHd .adv548 {
+    float: right;
+    margin: 5px 0 0 0
+}
+
+i.origin {
+    background-position: -30px -64px
+}
+
+.info_cc {
+    font-size: 20px;
+}
+
+.info_site {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+
+
+/* 车次和起终点 */
+.info_name_box {
+    float: left;
+    margin-left: 10px;
+    background-color: #4989D3;
+    color: #fff;
+    width: 200px;
+    height: 90px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+
+
+
+

@@ -4,7 +4,7 @@
 {% endblock %}
 {% block body_part %}
     <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-sm-4 offset-sm-4">
             <h2 style="text-align: center">登录</h2>
             <hr/>
             <form action="/login" method="post" id="login_form">
@@ -16,12 +16,31 @@
                     <label for="password">密码</label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="请输入您的密码">
                 </div>
-                <div align="center">
-                    <button type="reset" class="btn btn-secondary">重置</button>
-                    <button type="submit" class="btn btn-primary">登录</button>
+
+                <div>
+                    <div id="captcha" style="position: relative"></div>
+                    <div id="msg" style="text-align: center"></div>
                 </div>
+
+                <div id="login-buttons" style="text-align: center">
+                    <button type="reset" class="btn btn-secondary">重置</button>
+                    <button type="submit" class="btn btn-secondary" disabled>登录</button>
+                </div>
+
+                <script type="text/javascript">
+                    jigsaw.init(document.getElementById('captcha'), function () {
+                        document.getElementById('msg').innerHTML = "<p style='text-align=center'>验证成功！</p>";
+                        document.getElementById('login-buttons').innerHTML = "<button type='reset' "
+                            + "class='btn btn-secondary'>重置</button> <button type='submit' "
+                            + "class='btn btn-primary'>登录</button>";
+                    })
+                </script>
             </form>
-            <div align="center"><a href="register">没有帐号？点此注册！</a></div>
+            <div style="text-align: center">
+                <a href="register">没有帐号？点此注册！</a>
+                <br>
+                <a class="text-secondary" href="forget_password"><u>哎呀，我忘记密码了！</u></a>
+            </div>
         </div>
     </div>
 {% endblock %}

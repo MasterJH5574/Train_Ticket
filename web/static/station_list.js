@@ -2746,4 +2746,20 @@ $("#terminal_transit").autocomplete({
         }).slice(0, 10));
     }
 });
+$("#source_main").autocomplete({
+    source: function(request, response) {
+        const matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term), "i");
+        response($.grep(stations, function (item) {
+            return matcher.test(item);
+        }).slice(0, 10));
+    }
+});
+$("#terminal_main").autocomplete({
+    source: function(request, response) {
+        const matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term), "i");
+        response($.grep(stations, function (item) {
+            return matcher.test(item);
+        }).slice(0, 10));
+    }
+});
 });

@@ -18,8 +18,8 @@
             <!-- row 1 -->
             <div class="row">
                 <!-- datepicker -->
-                <label class="col-1 col-form-label" for="date" style="text-align: right">出发日</label>
-                <div class="col-5 input-group date" id="datepicker">
+                <label class="col-sm-1 col-form-label" for="date" style="text-align: right">出发日</label>
+                <div class="col-sm-5 input-group date" id="datepicker">
                     <input type="text" class="form-control" id="date"
                            name="date" placeholder="点击按钮选择出发日（留空则查询全部车票）">
                     <span class="input-group-append">
@@ -35,8 +35,8 @@
             <br/>
             <!-- row 2 -->
             <div class="row">
-                <div class="col-auto">车次类型：</div>
-                <div class="col-auto">
+                <div class="col-sm-auto">车次类型：</div>
+                <div class="col-sm-auto">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="type_C" value="type_C">
                         <label class="form-check-label" for="type_C">C型车</label>
@@ -66,7 +66,7 @@
                         <label class="form-check-label" for="type_Z">Z型车</label>
                     </div>
                 </div>
-                <div class="col-auto">
+                <div class="col-sm-auto">
                     <button type="button" class="btn btn-primary" onclick="query_train()">查询</button>
                 </div>
             </div>
@@ -158,28 +158,28 @@ C D G K O T Z
                 <br/><br/>
                 <form id="confirm_form" method="post" action="/my_ticket">
                     <div class="form-group row">
-                        <label for="train_id" class="col-3">车次</label>
-                        <input type="text" class="form-control col-5" id="train_id" name="train_id" readonly>
+                        <label for="train_id" class="col-sm-3">车次</label>
+                        <input type="text" class="form-control col-sm-5" id="train_id" name="train_id" readonly>
                     </div>
                     <div class="form-group row">
-                        <label for="source" class="col-3">出发站</label>
-                        <input type="text" class="form-control col-5" id="source" name="source" readonly>
+                        <label for="source" class="col-sm-3">出发站</label>
+                        <input type="text" class="form-control col-sm-5" id="source" name="source" readonly>
                     </div>
                     <div class="form-group row">
-                        <label for="terminal" class="col-3">到达站</label>
-                        <input type="text" class="form-control col-5" id="terminal" name="terminal" readonly>
+                        <label for="terminal" class="col-sm-3">到达站</label>
+                        <input type="text" class="form-control col-sm-5" id="terminal" name="terminal" readonly>
                     </div>
                     <div class="form-group row">
-                        <label for="time_departure" class="col-3">出发时间</label>
-                        <input type="text" class="form-control col-5" id="time_departure" name="time" readonly>
+                        <label for="time_departure" class="col-sm-3">出发时间</label>
+                        <input type="text" class="form-control col-sm-5" id="time_departure" name="time" readonly>
                     </div>
                     <div class="form-group row">
-                        <label for="time_arrival" class="col-3">到达时间</label>
-                        <input type="text" class="form-control col-5" id="time_arrival" readonly>
+                        <label for="time_arrival" class="col-sm-3">到达时间</label>
+                        <input type="text" class="form-control col-sm-5" id="time_arrival" readonly>
                     </div>
                     <div class="form-group row">
-                        <label for="seat" class="col-3">座位类型</label>
-                        <input type="text" class="form-control col-5" id="seat" name="seat" readonly>
+                        <label for="seat" class="col-sm-3">座位类型</label>
+                        <input type="text" class="form-control col-sm-5" id="seat" name="seat" readonly>
                     </div>
                 </form>
             </div>

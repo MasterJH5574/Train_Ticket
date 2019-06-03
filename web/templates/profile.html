@@ -4,14 +4,14 @@
 {% endblock %}
 {% block body_part %}
     <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-sm-6 offset-sm-3">
             <h2 style="text-align: center">查询用户信息</h2>
         </div>
     </div>
     {% if privilege == 2 %}
         <hr/>
         <div class="row form-inline">
-            <div class="col-md-4 offset-md-4">
+            <div class="col-sm-4 offset-sm-4">
                 <form id="query_profile_form" action="/profile" method="get">
                     <label for="query_id" style="float: left">用户ID：</label>
                     <input type="text" class="form-control" name="id" id="query_id" placeholder="请输入待查询的用户ID" value="{{ user_query_id }}">
@@ -22,7 +22,7 @@
     {% endif %}
     <hr/>
     <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-sm-6 offset-sm-3">
             <form id="profile_form">
                 <div class="form-group">
                     <label for="user_id">用户ID：</label>
@@ -44,7 +44,7 @@
                     <label for="privilege">用户权限：</label>
                     <input type="tel" class="form-control" id="privilege" disabled value="{{ user_privilege }}">
                 </div>
-                <div align="center">
+                <div style="text-align: center">
                     {% if user_id == user_query_id %}
                         <a href="http://localhost:5000/modify_profile" class="btn btn-secondary" role="button">修改我的信息</a>
                     {% endif %}

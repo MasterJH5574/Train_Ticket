@@ -3,16 +3,57 @@
 车票查询
 {% endblock %}
 {% block head_part %}
-<script src="../static/station_list.js"></script>
+<script src="/static/station_list.js"></script>
 {% endblock %}
 {% block body_part %}
 <div class="row">
-    <div class="col-md-6 offset-md-3">
+    <div class="col-sm-6 offset-sm-3">
         <h2 style="text-align: center">车票查询</h2>
     </div>
 </div>
 <hr/>
 
+{% if source != None %}
+<p id="source_name" hidden>{{ source }}</p>
+<p id="terminal_name" hidden>{{ terminal }}</p>
+<p id="date_value" hidden>{{ date }}</p>
+<script>
+    window.onload = function () {
+        const xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange=function () {
+            if (this.readyState == 4 && this.status == 200)
+                document.getElementById("table_body").innerHTML = this.responseText;
+        };
+        const S = document.getElementById("source_name").innerText;
+        const T = document.getElementById("terminal_name").innerText;
+        const date = document.getElementById("date_value").innerText;
+        document.getElementById("source_general").value = S;
+        document.getElementById("terminal_general").value = T;
+        document.getElementById("date_general").value = date;
+        document.getElementById("select_all_general").checked = true;
+        document.getElementById("type_C_general").checked = true;
+        document.getElementById("type_D_general").checked = true;
+        document.getElementById("type_G_general").checked = true;
+        document.getElementById("type_K_general").checked = true;
+        document.getElementById("type_O_general").checked = true;
+        document.getElementById("type_T_general").checked = true;
+        document.getElementById("type_Z_general").checked = true;
+        const url = "tickets/query_general_ajax" +
+            "?S=" + S +
+            "&T=" + T +
+            "&date=" + date +
+            "&type_C=true" +
+            "&type_D=true" +
+            "&type_G=true" +
+            "&type_K=true" +
+            "&type_O=true" +
+            "&type_T=true" +
+            "&type_Z=true";
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+    }
+</script>
+{% endif %}
 <!--
 C D G K O T Z
 商务座 特等座 一等座 二等座 高级软卧 软卧 动卧 硬卧 软座 硬座 无座
@@ -37,15 +78,16 @@ C D G K O T Z
                 <form id="query_ticket_form_general">
                     <!-- row 1 -->
                     <div class="row">
-                        <label class="col-1 col-form-label" for="source_general" style="text-align: right">出发站</label>
-                        <div class="col-auto">
+                        <label class="col-sm-auto col-form-label" for="source_general" style="text-align: right">出发站</label>
+                        <div class="col-sm-auto">
                             <input type="text" class="form-control"
                                    id="source_general" name="source_general" placeholder="请输入出发站">
                         </div>
 
                         <!-- icon -->
-                        <div class="col-auto" style="text-align: center">
-                            <span class="fas fa-exchange-alt" onclick="swap_input_value_general()" style="cursor: pointer"></span>
+                        <div class="col-sm-auto" style="text-align: center;">
+                            <span class="fas fa-exchange-alt my-2" onclick="swap_input_value_general()"
+                                  style="cursor: pointer;"></span>
                         </div>
                         <script>
                             function swap_input_value_general() {
@@ -56,15 +98,15 @@ C D G K O T Z
                             }
                         </script>
 
-                        <label class="col-auto col-form-label" for="terminal_general" style="text-align: right">到达站</label>
-                        <div class="col-auto">
+                        <label class="col-sm-auto col-form-label" for="terminal_general" style="text-align: right">到达站</label>
+                        <div class="col-sm-auto">
                             <input type="text" class="form-control"
                                    id="terminal_general" name="terminal_general" placeholder="请输入到达站">
                         </div>
 
                         <!-- datepicker -->
-                        <label class="col-auto col-form-label" for="date_general" style="text-align: right">出发日</label>
-                        <div class="col-3 input-group date" id="datepicker_general">
+                        <label class="col-sm-auto col-form-label" for="date_general" style="text-align: right">出发日</label>
+                        <div class="col-sm-3 input-group date" id="datepicker_general">
                             <input type="text" class="form-control" id="date_general"
                                    name="date_general" placeholder="点击按钮选择出发日">
                             <span class="input-group-append">
@@ -80,8 +122,8 @@ C D G K O T Z
                     <br/>
                     <!-- row 2 -->
                     <div class="row">
-                        <div class="col-auto">车次类型：</div>
-                        <div class="col-auto">
+                        <div class="col-sm-auto">车次类型：</div>
+                        <div class="col-sm-auto">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input check1" type="checkbox" id="select_all_general">
                                 <label class="form-check-label" for="select_all_general">全选</label>
@@ -128,7 +170,7 @@ C D G K O T Z
                                 <label class="form-check-label" for="type_Z_general">Z型车</label>
                             </div>
                         </div>
-                        <div class="col-auto">
+                        <div class="col-sm-auto">
                             <button type="button" class="btn btn-primary" onclick="query_general()">查询</button>
                         </div>
                         <script>
@@ -174,15 +216,16 @@ C D G K O T Z
                 <form id="query_ticket_form_transit">
                     <!-- row 1 -->
                     <div class="row">
-                        <label class="col-1 col-form-label" for="source_transit" style="text-align: right">出发站</label>
-                        <div class="col-auto">
+                        <label class="col-sm-auto col-form-label" for="source_transit" style="text-align: right">出发站</label>
+                        <div class="col-sm-auto">
                             <input type="text" class="form-control"
                                    id="source_transit" name="source_transit" placeholder="请输入出发站">
                         </div>
 
                         <!-- icon -->
-                        <div class="col-auto" style="text-align: center">
-                            <span class="fas fa-exchange-alt" onclick="swap_input_value_transit()" style="cursor: pointer"></span>
+                        <div class="col-sm-auto" style="text-align: center">
+                            <span class="fas fa-exchange-alt my-2" onclick="swap_input_value_transit()"
+                                  style="cursor: pointer"></span>
                         </div>
                         <script>
                             function swap_input_value_transit() {
@@ -193,15 +236,15 @@ C D G K O T Z
                             }
                         </script>
 
-                        <label class="col-auto col-form-label" for="terminal_transit" style="text-align: right">到达站</label>
-                        <div class="col-auto">
+                        <label class="col-sm-auto col-form-label" for="terminal_transit" style="text-align: right">到达站</label>
+                        <div class="col-sm-auto">
                             <input type="text" class="form-control"
                                    id="terminal_transit" name="terminal_transit" placeholder="请输入到达站">
                         </div>
 
                         <!-- datepicker -->
-                        <label class="col-auto col-form-label" for="date_transit" style="text-align: right">出发日</label>
-                        <div class="col-3 input-group date" id="datepicker_transit">
+                        <label class="col-sm-auto col-form-label" for="date_transit" style="text-align: right">出发日</label>
+                        <div class="col-sm-3 input-group date" id="datepicker_transit">
                             <input type="text" class="form-control" id="date_transit"
                                    name="date_transit" placeholder="点击按钮选择出发日">
                             <span class="input-group-append">
@@ -216,8 +259,8 @@ C D G K O T Z
 
                     <br/><!-- row 2 -->
                     <div class="row">
-                        <div class="col-auto">车次类型：</div>
-                        <div class="col-auto">
+                        <div class="col-sm-auto">车次类型：</div>
+                        <div class="col-sm-auto">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input check2" type="checkbox" id="select_all_transit">
                                 <label class="form-check-label" for="select_all_transit">全选</label>
@@ -264,7 +307,7 @@ C D G K O T Z
                                 <label class="form-check-label" for="type_Z_transit">Z型车</label>
                             </div>
                         </div>
-                        <div class="col-auto">
+                        <div class="col-sm-auto">
                             <button type="button" class="btn btn-primary" onclick="query_transit()">查询</button>
                         </div>
                         <script>
@@ -299,7 +342,7 @@ C D G K O T Z
                                 xmlhttp.send();
                             }
                         </script>
-                        <div class="col-auto text-info">
+                        <div class="col-sm-auto text-info">
                             <p class="font-weight-bold">查询一次中转且最快的两列车</p>
                         </div>
                     </div>
@@ -407,28 +450,28 @@ C D G K O T Z
                 <br/><br/>
                 <form id="confirm_form" method="post" action="/tickets">
                     <div class="form-group row">
-                        <label for="train_id" class="col-3">车次</label>
-                        <input type="text" class="form-control col-5" id="train_id" name="train_id" readonly>
+                        <label for="train_id" class="col-sm-3">车次</label>
+                        <input type="text" class="form-control col-sm-5" id="train_id" name="train_id" readonly>
                     </div>
                     <div class="form-group row">
-                        <label for="source" class="col-3">出发站</label>
-                        <input type="text" class="form-control col-5" id="source" name="source" readonly>
+                        <label for="source" class="col-sm-3">出发站</label>
+                        <input type="text" class="form-control col-sm-5" id="source" name="source" readonly>
                     </div>
                     <div class="form-group row">
-                        <label for="terminal" class="col-3">到达站</label>
-                        <input type="text" class="form-control col-5" id="terminal" name="terminal" readonly>
+                        <label for="terminal" class="col-sm-3">到达站</label>
+                        <input type="text" class="form-control col-sm-5" id="terminal" name="terminal" readonly>
                     </div>
                     <div class="form-group row">
-                        <label for="time_departure" class="col-3">出发时间</label>
-                        <input type="text" class="form-control col-5" id="time_departure" name="time_departure" readonly>
+                        <label for="time_departure" class="col-sm-3">出发时间</label>
+                        <input type="text" class="form-control col-sm-5" id="time_departure" name="time_departure" readonly>
                     </div>
                     <div class="form-group row">
-                        <label for="time_arrival" class="col-3">到达时间</label>
-                        <input type="text" class="form-control col-5" id="time_arrival" readonly>
+                        <label for="time_arrival" class="col-sm-3">到达时间</label>
+                        <input type="text" class="form-control col-sm-5" id="time_arrival" readonly>
                     </div>
                     <div class="form-group row">
-                        <label for="seat_select" class="col-3">座位类型<br/>及价格</label>
-                        <select class="form-control col-5" id="seat_select" name="seat">
+                        <label for="seat_select" class="col-sm-3">座位类型<br/>及价格</label>
+                        <select class="form-control col-sm-5" id="seat_select" name="seat">
                             <option>商务座 765.50元</option>
                             <option>特等座 765.49元</option>
                             <option>一等座 765.48元</option>

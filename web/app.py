@@ -1,7 +1,7 @@
-# filename app.py
+# -*- coding: utf-8 -*-
 
 import client
-from flask import Flask, render_template, session, redirect, url_for, request, flash, jsonify
+from flask import Flask, render_template, session, redirect, url_for, request, flash
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -18,7 +18,7 @@ def main_page():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    if request.method == 'GET':
+    if request.method != "POST":
         current_user = session.get('username')
         if current_user:
             flash("info 请勿重复登录！ 您已登录，请勿重复登录")
@@ -53,7 +53,7 @@ def login():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
-    if request.method == 'GET':
+    if request.method != "POST":
         current_user = session.get('username')
         if current_user:
             flash("danger 注册失败！ 您已登录，请先登出后再进行注册")
@@ -99,6 +99,19 @@ def logout():
     else:
         flash("danger 登出失败！ 未登录，焉登出？")
     return redirect(url_for("main_page"))
+
+
+@app.route("/forget_password")
+def forget_password():
+    current_user = session.get('username')
+    if current_user:
+        flash("danger 操作失败 请先登出再进行操作哟~")
+        return redirect(url_for("main_page"))
+    return render_template("forget_password.html",
+                           user_id=None,
+                           username=None,
+                           privilege=None,
+                           )
 
 
 @app.route("/profile")
@@ -147,7 +160,7 @@ def profile():
 
 @app.route("/modify_profile", methods=['POST', 'GET'])
 def modify_profile():
-    if request.method == 'GET':
+    if request.method != "POST":
         current_user_id = session.get('user_id')
         if not current_user_id:
             flash("danger 尚未登录！ 请登录后再进行操作(error_1)")
@@ -204,7 +217,7 @@ def modify_privilege():
         flash("danger 没有权限！ 您不是管理员，不能修改用户权限")
         return redirect(url_for('main_page'))
 
-    if request.method == 'GET':
+    if request.method != "POST":
         return render_template("modify_privilege.html",
                                user_id=session.get('user_id'),
                                username=session.get('username'),
@@ -222,11 +235,23 @@ def modify_privilege():
 
 @app.route('/tickets', methods=['POST', 'GET'])
 def query_ticket():
-    if request.method == 'GET':
+    if request.method != "POST":
+        source = request.args.get("source_main")
+        terminal = request.args.get("terminal_main")
+        date = request.args.get("date")
+        if source:
+            source = source
+        if terminal:
+            terminal = terminal
+        if date:
+            date = date
         return render_template("query_ticket.html",
                                user_id=session.get('user_id'),
                                username=session.get('username'),
-                               privilege=session.get('privilege')
+                               privilege=session.get('privilege'),
+                               source=source,
+                               terminal=terminal,
+                               date=date
                                )
     else:
         user_id = session.get('user_id')
@@ -255,7 +280,7 @@ def query_ticket():
 
 @app.route('/buy_ticket', methods=['POST', 'GET'])
 def buy_ticket():
-    if request.method == 'GET':
+    if request.method != "POST":
         flash("danger 访问失败！ 请先选择车票")
         return redirect(url_for('main_page'))
 
@@ -347,7 +372,7 @@ def my_ticket():
         flash("danger 尚未登录！ 请登录后再进行操作")
         return redirect(url_for('login'))
 
-    if request.method == "GET":
+    if request.method != "POST":
         return render_template("my_ticket.html",
                                user_id=session.get('user_id'),
                                username=session.get('username'),
@@ -415,9 +440,306 @@ def my_ticket_ajax():
             res += client.query_order(user_id, date, "T")
         if type_z:
             res += client.query_order(user_id, date, "Z")
-            
-    app.logger.debug(res)
+
     return res
+
+
+@app.route("/add_train", methods=['POST', 'GET'])
+def add_train():
+    if request.method != 'POST':
+        if not session.get('user_id'):
+            flash("danger 尚未登录！ 请登录后再进行操作(error_1)")
+            return redirect(url_for("login"))
+        if session.get('privilege') != 2:
+            flash("danger 没有权限！ 您不是管理员，不能新建车次")
+            return redirect(url_for('main_page'))
+        return render_template("add_train.html",
+                               user_id=session.get('user_id'),
+                               username=session.get('username'),
+                               privilege=session.get('privilege')
+                               )
+    else:
+        train_id = request.form.get("train_id")
+        train_name = request.form.get("train_name")
+        train_type = request.form.get("train_type")
+        station = request.form.getlist("station")
+        arrive_time = request.form.getlist("arrive_time")
+        start_time = request.form.getlist("start_time")
+        overstop_time = request.form.getlist("overstop_time")
+        bussiness_seat_price = request.form.getlist("business_seat_price")
+        principal_seat_price = request.form.getlist("principal_seat_price")
+        first_seat_price = request.form.getlist("first_seat_price")
+        second_seat_price = request.form.getlist("second_seat_price")
+        soft2_bed_price = request.form.getlist("soft2_bed_price")
+        soft_bed_price = request.form.getlist("soft_bed_price")
+        D_bed_price = request.form.getlist("D_bed_price")
+        hard_bed_price = request.form.getlist("hard_bed_price")
+        soft_seat_price = request.form.getlist("soft_seat_price")
+        hard_seat_price = request.form.getlist("hard_seat_price")
+        no_seat_price = request.form.getlist("no_seat_price")
+
+        ticket = []
+        if 'bussiness_seat' in request.form.keys():
+            ticket.append('商务座')
+        if 'principal_seat' in request.form.keys():
+            ticket.append('特等座')
+        if 'first_seat' in request.form.keys():
+            ticket.append('一等座')
+        if 'second_seat' in request.form.keys():
+            ticket.append('二等座')
+        if 'soft2_bed' in request.form.keys():
+            ticket.append('高级软卧')
+        if 'soft_bed' in request.form.keys():
+            ticket.append('软卧')
+        if 'D_bed' in request.form.keys():
+            ticket.append('动卧')
+        if 'hard_bed' in request.form.keys():
+            ticket.append('硬卧')
+        if 'soft_seat' in request.form.keys():
+            ticket.append('软座')
+        if 'hard_seat' in request.form.keys():
+            ticket.append('硬座')
+        if 'no_seat' in request.form.keys():
+            ticket.append('无座')
+
+        res = client.add_train(train_id, train_name, train_type, ticket, station, arrive_time, start_time,
+                               overstop_time, bussiness_seat_price, principal_seat_price, first_seat_price,
+                               second_seat_price, soft2_bed_price, soft_bed_price, D_bed_price, hard_bed_price,
+                               soft_seat_price, hard_seat_price, no_seat_price)
+        if res == 1:
+            flash("success 操作成功！ 已添加该车次")
+        else:
+            flash("danger 操作失败！ 未知错误，请检查该车次是否已存在！")
+        return redirect(url_for('main_page'))
+
+
+@app.route("/modify_train", methods=['POST', 'GET'])
+def modify_train():
+    if request.method != 'POST':
+        if not session.get('user_id'):
+            flash("danger 尚未登录！ 请登录后再进行操作(error_1)")
+            return redirect(url_for("login"))
+        if session.get('privilege') != 2:
+            flash("danger 没有权限！ 您不是管理员，不能修改车次")
+            return redirect(url_for('main_page'))
+        return render_template("modify_train.html",
+                               user_id=session.get('user_id'),
+                               username=session.get('username'),
+                               privilege=session.get('privilege')
+                               )
+    else:
+        train_id = request.form.get("train_id")
+        train_name = request.form.get("train_name")
+        train_type = request.form.get("train_type")
+        station = request.form.getlist("station")
+        arrive_time = request.form.getlist("arrive_time")
+        start_time = request.form.getlist("start_time")
+        overstop_time = request.form.getlist("overstop_time")
+        bussiness_seat_price = request.form.getlist("business_seat_price")
+        principal_seat_price = request.form.getlist("principal_seat_price")
+        first_seat_price = request.form.getlist("first_seat_price")
+        second_seat_price = request.form.getlist("second_seat_price")
+        soft2_bed_price = request.form.getlist("soft2_bed_price")
+        soft_bed_price = request.form.getlist("soft_bed_price")
+        D_bed_price = request.form.getlist("D_bed_price")
+        hard_bed_price = request.form.getlist("hard_bed_price")
+        soft_seat_price = request.form.getlist("soft_seat_price")
+        hard_seat_price = request.form.getlist("hard_seat_price")
+        no_seat_price = request.form.getlist("no_seat_price")
+
+        ticket = []
+        if 'bussiness_seat' in request.form.keys():
+            ticket.append('商务座')
+        if 'principal_seat' in request.form.keys():
+            ticket.append('特等座')
+        if 'first_seat' in request.form.keys():
+            ticket.append('一等座')
+        if 'second_seat' in request.form.keys():
+            ticket.append('二等座')
+        if 'soft2_bed' in request.form.keys():
+            ticket.append('高级软卧')
+        if 'soft_bed' in request.form.keys():
+            ticket.append('软卧')
+        if 'D_bed' in request.form.keys():
+            ticket.append('动卧')
+        if 'hard_bed' in request.form.keys():
+            ticket.append('硬卧')
+        if 'soft_seat' in request.form.keys():
+            ticket.append('软座')
+        if 'hard_seat' in request.form.keys():
+            ticket.append('硬座')
+        if 'no_seat' in request.form.keys():
+            ticket.append('无座')
+
+        res = client.modify_train(train_id, train_name, train_type, ticket, station, arrive_time, start_time,
+                                  overstop_time, bussiness_seat_price, principal_seat_price, first_seat_price,
+                                  second_seat_price, soft2_bed_price, soft_bed_price, D_bed_price, hard_bed_price,
+                                  soft_seat_price, hard_seat_price, no_seat_price)
+        if res == 1:
+            flash("success 修改成功！ 已修改该车次")
+        if res == 0:
+            flash("danger 修改失败！ 未知错误")
+        return redirect(url_for('main_page'))
+
+
+@app.route("/sale_train", methods=['GET', 'POST'])
+def sale_train():
+    if request.method != 'POST':
+        if not session.get('user_id'):
+            flash("danger 尚未登录！ 请登录后再进行操作(error_1)")
+            return redirect(url_for("login"))
+        if session.get('privilege') != 2:
+            flash("danger 没有权限！ 您不是管理员，不能公开车次")
+            return redirect(url_for('main_page'))
+        return render_template("sale_train.html",
+                               user_id=session.get('user_id'),
+                               username=session.get('username'),
+                               privilege=session.get('privilege')
+                               )
+    else:
+        train_id = request.form.get("train_id")
+        res = client.sale_train(train_id)
+        if res == 1:
+            flash("success 操作成功！ 已公开该车次")
+        else:
+            flash("danger 操作失败！ 请检查该车次是否存在或是否已公开")
+        return redirect(url_for('main_page'))
+
+
+@app.route("/delete_train", methods=['GET', 'POST'])
+def delete_train():
+    if request.method != 'POST':
+        if not session.get('user_id'):
+            flash("danger 尚未登录！ 请登录后再进行操作(error_1)")
+            return redirect(url_for("login"))
+        if session.get('privilege') != 2:
+            flash("danger 没有权限！ 您不是管理员，不能删除车次")
+            return redirect(url_for('main_page'))
+        return render_template("delete_train.html",
+                               user_id=session.get('user_id'),
+                               username=session.get('username'),
+                               privilege=session.get('privilege')
+                               )
+    else:
+        train_id = request.form.get("train_id")
+        res = client.delete_train(train_id)
+        if res == 1:
+            flash("success 操作成功！ 已删除该车次")
+        else:
+            flash("danger 操作失败！ 未知错误")
+        return redirect(url_for('main_page'))
+
+
+@app.route('/query_train', methods=['GET', 'POST'])
+def query_train():
+    if request.method != 'POST':
+        if not session.get('user_id'):
+            flash("danger 尚未登录！ 请登录后再进行操作(error_1)")
+            return redirect(url_for("login"))
+        if session.get('privilege') != 2:
+            flash("danger 没有权限！ 您不是管理员，不能查询车次")
+            return redirect(url_for('main_page'))
+        return render_template("query_train.html",
+                               user_id=session.get('user_id'),
+                               username=session.get('username'),
+                               privilege=session.get('privilege'),
+                               page=0
+                               )
+    else:
+        train_id = request.form.get("train_id")
+        flag = client.exist_train(train_id)
+        if flag == 0:
+            return render_template("query_train.html",
+                                   user_id=session.get('user_id'),
+                                   username=session.get('username'),
+                                   privilege=session.get('privilege'),
+                                   not_exist=1,
+                                   page=0)
+        else:
+            return redirect("/query_train_page/" + train_id + "/1")
+
+
+@app.route('/query_train_page/<train_id>/<int:page>', methods=['GET', 'POST'])
+def query_train_page(page, train_id):
+    res = client.query_train(train_id).split(' ')
+    train_name = res[0]
+    train_type = res[1]
+    station_number = int(res[2])
+    ticket_number = int(res[3])
+
+    ticket = []
+    for i in range(ticket_number):
+        ticket.append(res[i + 4])
+
+    everypage = 10
+    total_page = int((station_number + everypage - 1) / everypage)
+    if (page > total_page):
+        page = total_page
+    l = everypage * (page - 1)
+    r = min(station_number, everypage * page)
+
+    j = ticket_number + 4
+    station = []
+    arrive_time = []
+    start_time = []
+    stopover_time = []
+    price = []
+    all_station = []
+    for i in range(station_number):
+        station.append(res[j])
+        j = j + 1
+        arrive_time.append(res[j])
+        j = j + 1
+        start_time.append(res[j])
+        j = j + 1
+        stopover_time.append(res[j])
+        j = j + 1
+        price.append([])
+        for k in range(ticket_number):
+            price[i].append(res[j])
+            j = j + 1
+        all_station.append(i)
+
+    arrive_time[0] = "始发站"
+    start_time[station_number - 1] = "终点站"
+    stopover_time[0] = "始发站"
+    stopover_time[station_number - 1] = "终点站"
+
+    page_list = []
+    for i in range(total_page):
+        page_list.append(i + 1)
+
+    station_list = []
+    for i in range(l, r):
+        station_list.append(i)
+
+    ticket_list = []
+    for i in range(ticket_number):
+        ticket_list.append(i)
+
+    return render_template("query_train.html",
+                           user_id=session.get('user_id'),
+                           username=session.get('username'),
+                           privilege=session.get('privilege'),
+                           trick=0,
+                           page=int(page),
+                           total_page=int(total_page),
+                           all_station=all_station,
+                           station_list=station_list,
+                           page_list=page_list,
+                           ticket_list=ticket_list,
+                           train_id=train_id,
+                           train_name=train_name,
+                           train_type=train_type,
+                           station_number=station_number,
+                           ticket_number=ticket_number,
+                           ticket=ticket,
+                           station=station,
+                           arrive_time=arrive_time,
+                           start_time=start_time,
+                           stopover_time=stopover_time,
+                           price=price
+                           )
 
 
 if __name__ == '__main__':
