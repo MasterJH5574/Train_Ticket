@@ -68,15 +68,18 @@
                                                        placeholder="请输入您的密码">
                                             </div>
 
+                                            <!--
                                             <div class="mb-3">
                                                 <div id="captcha_modal" style="position: relative"></div>
                                                 <div id="msg_modal" style="text-align: center"></div>
                                             </div>
+                                            -->
 
                                             <div id="login-buttons-modal" style="text-align: center">
-                                                <button type="submit" class="btn btn-secondary" disabled>登录</button>
+                                                <button type="submit" class="btn btn-primary">登录</button>
                                             </div>
 
+                                            <!--
                                             <script type="text/javascript">
                                                 jigsaw.init(document.getElementById('captcha_modal'), function () {
                                                     document.getElementById('msg_modal').innerHTML =
@@ -85,6 +88,7 @@
                                                         "<button type='submit' class='btn btn-primary'>登录</button>";
                                                 })
                                             </script>
+                                            -->
                                         </form>
                                     </div>
                                 </div>
@@ -98,8 +102,8 @@
                     </div>
                 </div>
 
-                <!--<a href="http://localhost:5000/login" class="btn btn-info">登录</a>-->
-                <a href="http://localhost:5000/register" class="btn btn-info">注册</a>
+                <!--<a href="http://47.100.97.189/login" class="btn btn-info">登录</a>-->
+                <a href="http://47.100.97.189/register" class="btn btn-info">注册</a>
             </div>
             {% else %}
             <h5 class="my-1"> 你好！{{ username }} </h5>
@@ -108,11 +112,11 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">我的信息
             </button>
             <div class="dropdown-menu my-1" aria-labelledby="my_info_dropdown">
-                <a class="dropdown-item" href="http://localhost:5000/profile">我的个人资料</a>
-                <a class="dropdown-item" href="http://localhost:5000/my_ticket">我的购票信息</a>
+                <a class="dropdown-item" href="http://47.100.97.189/profile">我的个人资料</a>
+                <a class="dropdown-item" href="http://47.100.97.189/my_ticket">我的购票信息</a>
             </div>
-            <!--<a href="http://localhost:5000/profile" class="btn btn-info" role="button">我的信息</a>-->
-            <a href="http://localhost:5000/logout" class="btn btn-info" role="button">登出</a>
+            <!--<a href="http://47.100.97.189/profile" class="btn btn-info" role="button">我的信息</a>-->
+            <a href="http://47.100.97.189/logout" class="btn btn-info" role="button">登出</a>
             {% endif %}
         </div>
     </div>
@@ -130,10 +134,7 @@
                     <a class="nav-link" href="/">首页</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:5000/tickets">车票查询<br>车票购买</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:5000/query_train">车次查询</a>
+                    <a class="nav-link" href="http://47.100.97.189/tickets">车票查询<br>车票购买</a>
                 </li>
                 {% if privilege == 2 %}
                 <li class="nav-item dropdown">
@@ -142,8 +143,8 @@
                         用户管理
                     </a>
                     <div class="dropdown-menu" aria-labelledby="user_dropdown">
-                        <a class="dropdown-item" href="http://localhost:5000/profile">用户信息查询</a>
-                        <a class="dropdown-item" href="http://localhost:5000/modify_privilege">修改用户权限</a>
+                        <a class="dropdown-item" href="http://47.100.97.189/profile">用户信息查询</a>
+                        <a class="dropdown-item" href="http://47.100.97.189/modify_privilege">修改用户权限</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -152,12 +153,12 @@
                         车次管理
                     </a>
                     <div class="dropdown-menu" aria-labelledby="train_dropdown">
-                        <a class="dropdown-item" href="http://localhost:5000/add_train">添加车次</a>
-                        <a class="dropdown-item" href="http://localhost:5000/modify_train">修改车次</a>
-                        <a class="dropdown-item" href="http://localhost:5000/sale_train">公开车次</a>
-                        <a class="dropdown-item" href="http://localhost:5000/delete_train">删除车次</a>
+                        <a class="dropdown-item" href="http://47.100.97.189/add_train">添加车次</a>
+                        <a class="dropdown-item" href="http://47.100.97.189/modify_train">修改车次</a>
+                        <a class="dropdown-item" href="http://47.100.97.189/sale_train">公开车次</a>
+                        <a class="dropdown-item" href="http://47.100.97.189/delete_train">删除车次</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="http://localhost:5000/query_train">查询车次</a>
+                        <a class="dropdown-item" href="http://47.100.97.189/query_train">查询车次</a>
                     </div>
                 </li>
                 {% endif %}

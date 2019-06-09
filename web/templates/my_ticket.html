@@ -38,31 +38,40 @@
                 <div class="col-sm-auto">车次类型：</div>
                 <div class="col-sm-auto">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="type_C" value="type_C">
+                        <input class="form-check-input check1" type="checkbox" id="select_all">
+                        <label class="form-check-label" for="select_all">全选</label>
+                    </div>
+                    <script>
+                        $("#select_all").click(function () {
+                            $(".check1").prop('checked', $(this).prop('checked'));
+                        });
+                    </script>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input check1" type="checkbox" id="type_C" value="type_C">
                         <label class="form-check-label" for="type_C">C型车</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="type_D" value="type_D">
+                        <input class="form-check-input check1" type="checkbox" id="type_D" value="type_D">
                         <label class="form-check-label" for="type_D">D型车</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="type_G" value="type_G">
+                        <input class="form-check-input check1" type="checkbox" id="type_G" value="type_G">
                         <label class="form-check-label" for="type_G">G型车</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="type_K" value="type_K">
+                        <input class="form-check-input check1" type="checkbox" id="type_K" value="type_K">
                         <label class="form-check-label" for="type_K">K型车</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="type_O" value="type_O">
+                        <input class="form-check-input check1" type="checkbox" id="type_O" value="type_O">
                         <label class="form-check-label" for="type_O">O型车</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="type_T" value="type_T">
+                        <input class="form-check-input check1" type="checkbox" id="type_T" value="type_T">
                         <label class="form-check-label" for="type_T">T型车</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="type_Z" value="type_Z">
+                        <input class="form-check-input check1" type="checkbox" id="type_Z" value="type_Z">
                         <label class="form-check-label" for="type_Z">Z型车</label>
                     </div>
                 </div>

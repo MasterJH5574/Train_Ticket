@@ -25,20 +25,20 @@
         </tr></thead>
         <tbody id="table_body">
             <tr>
-                <td id="train_id">{{ train_id.decode('utf-8') }}</td>
-                <td id="source">{{ source.decode('utf-8') }}</td>
-                <td id="terminal">{{ terminal.decode('utf-8') }}</td>
-                <td id="time_departure">{{ time_departure.decode('utf-8') }}</td>
+                <td id="train_id">{{ train_id }}</td>
+                <td id="source">{{ source }}</td>
+                <td id="terminal">{{ terminal }}</td>
+                <td id="time_departure">{{ time_departure }}</td>
                 <td> 1 </td>
-                <td id="seat">{{ seat.decode('utf-8') }}</td>
-                <td>{{ price.decode('utf-8') }}</td>
+                <td id="seat">{{ seat }}</td>
+                <td>{{ price }}</td>
             </tr>
         </tbody>
     </table>
 </form>
 
 <div align="center">
-    <a href="http://localhost:5000/tickets" class="btn btn-secondary">返回查询页面</a>
+    <a href="http://47.100.97.189/tickets" class="btn btn-secondary">返回查询页面</a>
     <button type="button" class="btn btn-primary" onclick="post_table('/buy_ticket', get_paras())">确认购买</button>
 </div>
 

@@ -331,6 +331,7 @@ def query_general_ajax():
         res += client.query_ticket(s, t, date, "T")
     if type_z:
         res += client.query_ticket(s, t, date, "Z")
+    app.logger.debug(res)
     return res
 
 
@@ -662,14 +663,17 @@ def query_train():
 @app.route('/query_train_page/<train_id>/<int:page>', methods=['GET', 'POST'])
 def query_train_page(page, train_id):
     res = client.query_train(train_id).split(' ')
-    train_name = res[0]
-    train_type = res[1]
-    station_number = int(res[2])
-    ticket_number = int(res[3])
+    if res[0] == "0":
+        flash("danger 操作错误！ 未找到该车次")
+        return redirect(url_for("query_train"))
+    train_name = res[1]
+    train_type = res[2]
+    station_number = int(res[3])
+    ticket_number = int(res[4])
 
     ticket = []
     for i in range(ticket_number):
-        ticket.append(res[i + 4])
+        ticket.append(res[i + 5])
 
     everypage = 10
     total_page = int((station_number + everypage - 1) / everypage)
@@ -686,17 +690,17 @@ def query_train_page(page, train_id):
     price = []
     all_station = []
     for i in range(station_number):
-        station.append(res[j])
+        station.append(res[j + 1])
         j = j + 1
-        arrive_time.append(res[j])
+        arrive_time.append(res[j + 1])
         j = j + 1
-        start_time.append(res[j])
+        start_time.append(res[j + 1])
         j = j + 1
-        stopover_time.append(res[j])
+        stopover_time.append(res[j + 1])
         j = j + 1
         price.append([])
         for k in range(ticket_number):
-            price[i].append(res[j])
+            price[i].append(res[j + 1])
             j = j + 1
         all_station.append(i)
 
