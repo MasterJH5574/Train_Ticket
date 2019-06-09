@@ -1,8 +1,8 @@
-#开发文档
+# 开发文档
 
 ------
 
-##一、模块划分图
+## 一、模块划分图
 ![avatar](https://raw.githubusercontent.com/MasterJH5574/Train_Ticket/master/%E5%AF%BC%E5%9B%BE2.png)
 ##二、函数功能
 ###user类
