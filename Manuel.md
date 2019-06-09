@@ -58,8 +58,8 @@
 
 
 ## 四、使用手册与系统安装手册
-
-<iframe height=500 width=500 src="https://github.com/MasterJH5574/Train_Ticket/blob/master/gif/1.gif"></iframe>
+![avatar](https://github.com/MasterJH5574/Train_Ticket/blob/master/gif/1.gif)
+<iframe height=500 width=500 src="https://github.com/MasterJH5574/Train_Ticket/blob/master/gif/1.gif"> </iframe>
 
 ## 五、组员工作情况
 
