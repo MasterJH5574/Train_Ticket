@@ -62,7 +62,7 @@
 ![avatar](https://github.com/MasterJH5574/Train_Ticket/blob/master/gif/user.gif)
 ### 关于车票（查询车票、带中转查询车票、购票、查询购票信息、退票）
 ![avatar](https://github.com/MasterJH5574/Train_Ticket/blob/master/gif/ticket.gif)
-### 关于车次（添加车次。公开车次、查询车次、修改车次、删除车次）
+### 关于车次（新建车次、公开车次、查询车次、修改车次、删除车次）
 ![avatar](https://github.com/MasterJH5574/Train_Ticket/blob/master/gif/train.gif)
 
 ## 五、组员工作情况
